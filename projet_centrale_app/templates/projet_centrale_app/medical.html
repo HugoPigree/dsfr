@@ -1,0 +1,234 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Médical</title>
+    <!-- Inclusion de DSFR -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.min.css"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"
+    ></script>
+    <!-- Inclusion de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <!-- En-tête -->
+    <header class="fr-header" role="banner">
+      <div class="fr-header__body">
+        <div class="fr-container">
+          <div class="fr-header__body-row">
+            <div class="fr-header__brand fr-enlarge-link">
+              <div class="fr-header__brand-top">
+                <div class="fr-header__logo">
+                  <p class="fr-logo">
+                    Intitulé <br />
+                    officiel
+                  </p>
+                </div>
+              </div>
+              <div class="fr-header__service">
+                <a href="{% url 'index' %}">
+                  <p class="fr-header__service-title">Nom du site / service</p>
+                </a>
+                <p class="fr-header__service-tagline">
+                  Baseline - précisions sur l’organisation
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Titre principal -->
+    <h1 class="text-3xl font-bold text-center mt-8 mb-12">
+      Liste des projets du secteur médical
+    </h1>
+
+    <!-- Bloc des cartes -->
+    <main class="mx-[15%] mb-16">
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <!-- Carte 1 -->
+        <div class="fr-col fr-col-md-4">
+          <div class="fr-card fr-card--no-arrow fr-enlarge-link">
+            <div class="fr-card__body">
+              <div class="fr-card__content">
+                <h3 class="fr-card__title">
+                  <a href="../html_formulaires_medical/formulaires_Delta-medical.html">
+                    Delta médical
+                  </a>
+                </h3>
+                <p class="fr-card__desc">Projet portant sur la modernisation des soins.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 2 -->
+        <div class="fr-col fr-col-md-4">
+          <div class="fr-card fr-card--no-arrow fr-enlarge-link">
+            <div class="fr-card__body">
+              <div class="fr-card__content">
+                <h3 class="fr-card__title">
+                  <a href="#">Psycho-trauma</a>
+                </h3>
+                <p class="fr-card__desc">Projet portant sur la gestion des troubles post-traumatiques.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 3 -->
+        <div class="fr-col fr-col-md-4">
+          <div class="fr-card fr-card--no-arrow fr-enlarge-link">
+            <div class="fr-card__body">
+              <div class="fr-card__content">
+                <h3 class="fr-card__title">
+                  <a href="#">Handicap</a>
+                </h3>
+                <p class="fr-card__desc">Projet visant à améliorer l’inclusion des personnes en situation de handicap.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 4 -->
+        <div class="fr-col fr-col-md-4">
+          <div class="fr-card fr-card--no-arrow fr-enlarge-link">
+            <div class="fr-card__body">
+              <div class="fr-card__content">
+                <h3 class="fr-card__title">
+                  <a href="#">POL2AS</a>
+                </h3>
+                <p class="fr-card__desc">Projet portant sur les absences administratives médicales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 5 -->
+        <div class="fr-col fr-col-md-4">
+          <div class="fr-card fr-card--no-arrow fr-enlarge-link">
+            <div class="fr-card__body">
+              <div class="fr-card__content">
+                <h3 class="fr-card__title">
+                  <a href="#">GAPV</a>
+                </h3>
+                <p class="fr-card__desc">Projet de gestion des alertes et prévention des vulnérabilités.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 6 -->
+        <div class="fr-col fr-col-md-4">
+          <div class="fr-card fr-card--no-arrow fr-enlarge-link">
+            <div class="fr-card__body">
+              <div class="fr-card__content">
+                <h3 class="fr-card__title">
+                  <a href="Projets/Sisspo.html">Sisspo</a>
+                </h3>
+                <p class="fr-card__desc">Projet sur les systèmes d’information et support opérationnel.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="fr-footer mt-auto pt-16" role="contentinfo">
+      <div class="fr-container">
+        <div class="fr-footer__body">
+          <div class="fr-footer__brand fr-enlarge-link">
+            <a href="{% url 'index' %}">
+              <p class="fr-logo">Intitulé <br />officiel</p>
+            </a>
+          </div>
+          <div class="fr-footer__content">
+            <p class="fr-footer__content-desc">
+              Lorem ipsum dolor sit amet, consectetur adipiscing, incididunt, ut
+              labore et dolore magna aliqua. Vitae sapien pellentesque habitant
+              morbi tristique senectus et. Diam maecenas sed enim ut. Accumsan
+              lacus vel facilisis volutpat est. Ut aliqu
+            </p>
+            <ul class="fr-footer__content-list">
+              <li class="fr-footer__content-item">
+                <a
+                  class="fr-footer__content-link"
+                  href="https://info.gouv.fr"
+                  rel="noopener external"
+                  target="_blank"
+                  title="info.gouv.fr - nouvelle fenêtre"
+                  >info.gouv.fr</a
+                >
+              </li>
+              <li class="fr-footer__content-item">
+                <a
+                  class="fr-footer__content-link"
+                  href="https://service-public.fr"
+                  rel="noopener external"
+                  target="_blank"
+                  title="service-public.fr - nouvelle fenêtre"
+                  >service-public.fr</a
+                >
+              </li>
+              <li class="fr-footer__content-item">
+                <a
+                  class="fr-footer__content-link"
+                  href="https://legifrance.gouv.fr"
+                  rel="noopener external"
+                  target="_blank"
+                  title="legifrance.gouv.fr - nouvelle fenêtre"
+                  >legifrance.gouv.fr</a
+                >
+              </li>
+              <li class="fr-footer__content-item">
+                <a
+                  class="fr-footer__content-link"
+                  href="https://data.gouv.fr"
+                  rel="noopener external"
+                  target="_blank"
+                  title="data.gouv.fr - nouvelle fenêtre"
+                  >data.gouv.fr</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="fr-footer__bottom">
+          <ul class="fr-footer__bottom-list">
+            <li class="fr-footer__bottom-item">
+              <a class="fr-footer__bottom-link" href="#">Plan du site</a>
+            </li>
+            <li class="fr-footer__bottom-item">
+              <a class="fr-footer__bottom-link" href="#">Mentions légales</a>
+            </li>
+            <li class="fr-footer__bottom-item">
+              <a class="fr-footer__bottom-link" href="#">Données personnelles</a>
+            </li>
+          </ul>
+          <div class="fr-footer__bottom-copy">
+            <p>
+              Sauf mention explicite de propriété intellectuelle détenue par des
+              tiers, les contenus de ce site sont proposés sous
+              <a
+                href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
+                rel="noopener external"
+                target="_blank"
+                title="Licence etalab - nouvelle fenêtre"
+                >licence etalab-2.0</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
