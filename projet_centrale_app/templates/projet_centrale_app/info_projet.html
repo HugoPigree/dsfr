@@ -4,20 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ projet.titre }} - Informations</title>
+    <title>Informations - {{ projet.titre }}</title>
     <link href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.min.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col h-screen ">
     <!-- Header -->
     {% include 'projet_centrale_app/partials/header.html' %}
 
     <!-- Main content -->
-    <main class="fr-container my-16">
-        <h1 class="text-3xl font-bold mb-8">{{ projet.titre }}</h1>
-        <p class="text-lg text-gray-700 mb-4">{{ projet.description }}</p>
-        <p class="text-md text-gray-600">Ici, vous pouvez afficher des informations détaillées spécifiques à ce projet.</p>
+    <main class="fr-container flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-8">
+        <!-- Détails du projet -->
+        <section class="bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-xl font-bold mb-5">Détails du projet</h2>
+            <div>
+                <p><strong>Priorité :</strong> Haute</p> <br>
+                <p><strong>Date de début :</strong> 01/01/2024</p><br>
+                <p><strong>Date de fin souhaitée :</strong> 31/12/2024</p><br>
+                <p><strong>Organisation :</strong> Ministère de la Santé</p><br>
+                <p><strong>Planning prévisionnel :</strong> 12 mois</p>
+            </div>
+        </section>
+
+        <!-- Maturité du projet -->
+        <section class="bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-xl font-bold mb-2">Maturité du projet</h2>
+            <div>
+                <h3 class="font-semibold mb-1">Dossier fonctionnel</h3>
+                <ul class="list-disc pl-4 text-sm">
+                    <li>Plan de charge : Validé</li>
+                    <li>FEB : Document validé</li>
+                    <li>Note de cadrage : En cours</li>
+                    <li>Cahier des charges : Livré</li>
+                    <li>DAT : Soumis à validation</li>
+                    <li>Documentations utilisateurs : En rédaction</li>
+                </ul>
+                <h3 class="font-semibold mt-4 mb-1">Dossier SI et SSI</h3>
+                <ul class="list-disc pl-4 text-sm">
+                    <li>Demande SSO : Complétée</li>
+                    <li>Demande d'hébergement : En attente</li>
+                    <li>Fiche registre : Non démarrée</li>
+                    <li>Note d'orientation SSI : Validée</li>
+                    <li>Analyse de risque : En cours</li>
+                    <li>Homologation : Planifiée</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Caractéristiques techniques -->
+        <section class="bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-xl font-bold mb-5">Caractéristiques techniques</h2>
+            <div>
+                <p><strong>OS Serveur :</strong> Linux</p><br>
+                <p><strong>Type d'hébergement :</strong> Cloud</p><br>
+                <p><strong>Technologies utilisées :</strong> Django, PostgreSQL</p><br>
+                <p><strong>Base de données :</strong> PostgreSQL</p><br>
+                <p><strong>Authentification :</strong> LDAP</p><br>
+                <p><strong>Budget :</strong> 100,000 €</p>
+            </div>
+        </section>
+
+        <!-- Avancées -->
+        <section class="bg-white shadow-md p-4 rounded-lg col-span-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="projet-avance" class="block mb-1">Avancée du projet :</label>
+                    <select id="projet-avance" class="fr-select w-full">
+                        <option>Demande</option>
+                        <option>Cadrage</option>
+                        <option>Étude de faisabilité</option>
+                        <option>Déploiement</option>
+                        <option>Conception</option>
+                        <option>Réalisation</option>
+                        <option>Exploitation</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="homologation-avance" class="block mb-1">Avancée de l'homologation :</label>
+                    <select id="homologation-avance" class="fr-select w-full">
+                        <option>Note d'orientation SSI</option>
+                        <option>Analyse de risque</option>
+                        <option>Socle de sécurité</option>
+                        <option>Dossier d'architecture</option>
+                        <option>Audit</option>
+                        <option>Avis de décision d'homologation</option>
+                    </select>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->

@@ -106,7 +106,5 @@ def info_projet(request, categorie_slug, projet_slug):
                 if p["slug"] == projet_slug:
                     projet = p
                     break
-    if not projet:
-        return render(request, "404.html", status=404)
 
     return render(request, "projet_centrale_app/info_projet.html", {"projet": projet})

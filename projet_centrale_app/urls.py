@@ -8,4 +8,3 @@ urlpatterns = [
     path('<str:categorie_slug>/<str:projet_slug>/info/', views.info_projet, name='info_projet'),
 
 ]
-
