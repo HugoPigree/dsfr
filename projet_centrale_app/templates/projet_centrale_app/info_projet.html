@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ projet.titre }} - Informations</title>
+    <link href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    {% include 'projet_centrale_app/partials/header.html' %}
+
+    <!-- Main content -->
+    <main class="fr-container my-16">
+        <h1 class="text-3xl font-bold mb-8">{{ projet.titre }}</h1>
+        <p class="text-lg text-gray-700 mb-4">{{ projet.description }}</p>
+        <p class="text-md text-gray-600">Ici, vous pouvez afficher des informations détaillées spécifiques à ce projet.</p>
+    </main>
+
+    <!-- Footer -->
+    {% include 'projet_centrale_app/partials/footer.html' %}
+</body>
+</html>
