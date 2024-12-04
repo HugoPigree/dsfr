@@ -22,7 +22,7 @@ Avant de commencer, assurez-vous d'avoir installé sur votre PC :
 Clonez ce dépôt Git sur votre machine locale :
 
 ```bash
-git clone https://github.com/<ton-utilisateur>/projet-centrale.git
+git clone https://github.com/HugoPigree/dsfr.git
 cd projet-centrale
 
 ```
