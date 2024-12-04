@@ -1,5 +1,7 @@
 from django.shortcuts import render
-
+from .forms import ProjetForm
+from django.shortcuts import render, redirect
+from django.utils.text import slugify
 # Dictionnaire des catégories et leurs projets
 categories = {
     "medical": {
@@ -1224,3 +1226,63 @@ def info_projet(request, categorie_slug, projet_slug):
             "details_projet": details_projet,
         },
     )
+
+def ajouter_projet(request):
+    if request.method == "POST":
+        form = ProjetForm(request.POST)
+        if form.is_valid():
+            projet_data = form.cleaned_data
+            titre = projet_data["titre"]
+
+            # Génération automatique du slug (titre adapter pour l'ordi)
+            slug = slugify(titre)
+
+            # Ajouter le projet au dictionnaire existant
+            categorie_slug = projet_data["categorie_slug"]
+            if categorie_slug in categories:
+                categories[categorie_slug]["projets"].append({
+                    "slug": slug,
+                    "titre": titre,
+                    "description": projet_data["description"],
+                    "details": {
+                        "priorite": projet_data["priorite"],
+                        "date_debut": projet_data["date_debut"],
+                        "date_fin_souhaitee": projet_data["date_fin_souhaitee"],
+                        "organisation": projet_data["organisation"],
+                        "planning_previsionnel": projet_data["planning_previsionnel"],
+                        "maturite": {
+                            "dossier_fonctionnel": {
+                                "plan_de_charge": projet_data["plan_de_charge"],
+                                "feb": projet_data["feb"],
+                                "note_de_cadrage": projet_data["note_de_cadrage"],
+                                "cahier_des_charges": projet_data["cahier_des_charges"],
+                                "dat": projet_data["dat"],
+                                "documentation_utilisateurs": projet_data["documentation_utilisateurs"],
+                            },
+                            "dossier_si_et_ssi": {
+                                "demande_sso": projet_data["demande_sso"],
+                                "demande_hebergement": projet_data["demande_hebergement"],
+                                "fiche_registre": projet_data["fiche_registre"],
+                                "note_orientation_ssi": projet_data["note_orientation_ssi"],
+                                "analyse_de_risque": projet_data["analyse_de_risque"],
+                                "homologation": projet_data["homologation"],
+                            },
+                        },
+                        "caracteristiques_techniques": {
+                            "os_serveur": projet_data["os_serveur"],
+                            "type_hebergement": projet_data["type_hebergement"],
+                            "techno_utilisees": projet_data["techno_utilisees"],
+                            "bdd": projet_data["bdd"],
+                            "authentification": projet_data["authentification"],
+                        },
+                        "budget": projet_data["budget"],
+                        "avancement_projet": projet_data["avancement_projet"],
+                        "avancement_homologation": projet_data["avancement_homologation"],
+                    },
+                })
+                return redirect('index')  # Retourner à la page d'accueil
+            else:
+                return render(request, "404.html", status=404)
+    else:
+        form = ProjetForm()
+    return render(request, "projet_centrale_app/ajouter_projet.html", {"form": form})
