@@ -9,20 +9,20 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col h-screen ">
+<body class="flex flex-col h-screen">
     <!-- Header -->
     {% include 'projet_centrale_app/partials/header.html' %}
 
     <!-- Main content -->
-    <main class="fr-container flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-8">
+    <main class="fr-container grid grid-cols-1 xl:grid-cols-3 gap-6 p-4 mt-8">
         <!-- Détails du projet -->
         <section class="bg-white shadow-md p-4 rounded-lg">
             <h2 class="text-xl font-bold mb-5">Détails du projet</h2>
-            <div>
-                <p><strong>Priorité :</strong> Haute</p> <br>
-                <p><strong>Date de début :</strong> 01/01/2024</p><br>
-                <p><strong>Date de fin souhaitée :</strong> 31/12/2024</p><br>
-                <p><strong>Organisation :</strong> Ministère de la Santé</p><br>
+            <div class="text-sm">
+                <p><strong>Priorité :</strong> Haute</p>
+                <p><strong>Date de début :</strong> 01/01/2024</p>
+                <p><strong>Date de fin souhaitée :</strong> 31/12/2024</p>
+                <p><strong>Organisation :</strong> Ministère de la Santé</p>
                 <p><strong>Planning prévisionnel :</strong> 12 mois</p>
             </div>
         </section>
@@ -52,24 +52,25 @@
             </div>
         </section>
 
-        <!-- Caractéristiques techniques -->
+        <!-- Caractéristiques techniques et Budget -->
         <section class="bg-white shadow-md p-4 rounded-lg">
             <h2 class="text-xl font-bold mb-5">Caractéristiques techniques</h2>
-            <div>
-                <p><strong>OS Serveur :</strong> Linux</p><br>
-                <p><strong>Type d'hébergement :</strong> Cloud</p><br>
-                <p><strong>Technologies utilisées :</strong> Django, PostgreSQL</p><br>
-                <p><strong>Base de données :</strong> PostgreSQL</p><br>
-                <p><strong>Authentification :</strong> LDAP</p><br>
+            <div class="text-sm">
+                <p><strong>OS Serveur :</strong> Linux</p>
+                <p><strong>Type d'hébergement :</strong> Cloud</p>
+                <p><strong>Technologies utilisées :</strong> Django, PostgreSQL</p>
+                <p><strong>Base de données :</strong> PostgreSQL</p>
+                <p><strong>Authentification :</strong> LDAP</p>
                 <p><strong>Budget :</strong> 100,000 €</p>
             </div>
         </section>
 
         <!-- Avancées -->
         <section class="bg-white shadow-md p-4 rounded-lg col-span-3">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h2 class="text-xl font-bold mb-5">Avancements</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="projet-avance" class="block mb-1">Avancée du projet :</label>
+                    <label for="projet-avance" class="block mb-2 font-semibold">Avancée du projet :</label>
                     <select id="projet-avance" class="fr-select w-full">
                         <option>Demande</option>
                         <option>Cadrage</option>
@@ -81,7 +82,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="homologation-avance" class="block mb-1">Avancée de l'homologation :</label>
+                    <label for="homologation-avance" class="block mb-2 font-semibold">Avancée de l'homologation :</label>
                     <select id="homologation-avance" class="fr-select w-full">
                         <option>Note d'orientation SSI</option>
                         <option>Analyse de risque</option>

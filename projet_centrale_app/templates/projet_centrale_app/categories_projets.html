@@ -25,7 +25,7 @@
                 <div class="fr-card__body">
                     <div class="fr-card__content">
                         <h3 class="fr-card__title">
-                            <a href="{% url 'projet_detail' projet_slug=projet.slug %}">
+                            <a href="{% url 'projet_detail' categorie_slug=categorie_slug projet_slug=projet.slug %}">
                                 {{ projet.titre }}
                             </a>
                         </h3>
