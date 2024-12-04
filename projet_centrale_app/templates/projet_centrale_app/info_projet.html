@@ -15,7 +15,7 @@
     {% include 'projet_centrale_app/partials/header.html' %}
 
     <!-- Main content -->
-    <main class="fr-container grid grid-cols-1 xl:grid-cols-3 gap-6 p-4 mt-8">
+    <main class="fr-container grid grid-cols-1 xl:grid-cols-3 gap-6 p-4 mt-8 mb-16">
         <!-- Titre principal -->
         <div class="col-span-3 text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-800">{{ projet.titre }}</h1>
@@ -25,10 +25,10 @@
         <section class="bg-white shadow-md p-4 rounded-lg">
             <h2 class="text-xl font-bold mb-5">Détails du projet</h2>
             <div class="text-sm">
-                <p><strong>Priorité :</strong> {{ details_projet.priorite }}</p>
-                <p><strong>Date de début :</strong> {{ details_projet.date_debut }}</p>
-                <p><strong>Date de fin souhaitée :</strong> {{ details_projet.date_fin_souhaitee }}</p>
-                <p><strong>Organisation :</strong> {{ details_projet.organisation }}</p>
+                <p><strong>Priorité :</strong> {{ details_projet.priorite }}</p><br>
+                <p><strong>Date de début :</strong> {{ details_projet.date_debut }}</p><br>
+                <p><strong>Date de fin souhaitée :</strong> {{ details_projet.date_fin_souhaitee }}</p><br>
+                <p><strong>Organisation :</strong> {{ details_projet.organisation }}</p><br>
                 <p><strong>Planning prévisionnel :</strong> {{ details_projet.planning_previsionnel }}</p>
             </div>
         </section>
@@ -62,11 +62,11 @@
         <section class="bg-white shadow-md p-4 rounded-lg">
             <h2 class="text-xl font-bold mb-5">Caractéristiques techniques</h2>
             <div class="text-sm">
-                <p><strong>OS Serveur :</strong> {{ details_projet.caracteristiques_techniques.os_serveur }}</p>
-                <p><strong>Type d'hébergement :</strong> {{ details_projet.caracteristiques_techniques.type_hebergement }}</p>
-                <p><strong>Technologies utilisées :</strong> {{ details_projet.caracteristiques_techniques.techno_utilisees|join:", " }}</p>
-                <p><strong>Base de données :</strong> {{ details_projet.caracteristiques_techniques.bdd }}</p>
-                <p><strong>Authentification :</strong> {{ details_projet.caracteristiques_techniques.authentification }}</p>
+                <p><strong>OS Serveur :</strong> {{ details_projet.caracteristiques_techniques.os_serveur }}</p><br>
+                <p><strong>Type d'hébergement :</strong> {{ details_projet.caracteristiques_techniques.type_hebergement }}</p><br>
+                <p><strong>Technologies utilisées :</strong> {{ details_projet.caracteristiques_techniques.techno_utilisees|join:", " }}</p><br>
+                <p><strong>Base de données :</strong> {{ details_projet.caracteristiques_techniques.bdd }}</p><br>
+                <p><strong>Authentification :</strong> {{ details_projet.caracteristiques_techniques.authentification }}</p><br>
                 <p><strong>Budget :</strong> {{ details_projet.budget }}</p>
             </div>
         </section>
