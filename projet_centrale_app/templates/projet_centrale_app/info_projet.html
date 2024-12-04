@@ -5,25 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informations - {{ projet.titre }}</title>
+    <!-- Inclusion de DSFR et Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.min.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col h-screen">
+<body class="flex flex-col min-h-screen">
     <!-- Header -->
     {% include 'projet_centrale_app/partials/header.html' %}
 
     <!-- Main content -->
     <main class="fr-container grid grid-cols-1 xl:grid-cols-3 gap-6 p-4 mt-8">
+        <!-- Titre principal -->
+        <div class="col-span-3 text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">{{ projet.titre }}</h1>
+        </div>
+
         <!-- Détails du projet -->
         <section class="bg-white shadow-md p-4 rounded-lg">
             <h2 class="text-xl font-bold mb-5">Détails du projet</h2>
             <div class="text-sm">
-                <p><strong>Priorité :</strong> Haute</p>
-                <p><strong>Date de début :</strong> 01/01/2024</p>
-                <p><strong>Date de fin souhaitée :</strong> 31/12/2024</p>
-                <p><strong>Organisation :</strong> Ministère de la Santé</p>
-                <p><strong>Planning prévisionnel :</strong> 12 mois</p>
+                <p><strong>Priorité :</strong> {{ details_projet.priorite }}</p>
+                <p><strong>Date de début :</strong> {{ details_projet.date_debut }}</p>
+                <p><strong>Date de fin souhaitée :</strong> {{ details_projet.date_fin_souhaitee }}</p>
+                <p><strong>Organisation :</strong> {{ details_projet.organisation }}</p>
+                <p><strong>Planning prévisionnel :</strong> {{ details_projet.planning_previsionnel }}</p>
             </div>
         </section>
 
@@ -33,21 +39,21 @@
             <div>
                 <h3 class="font-semibold mb-1">Dossier fonctionnel</h3>
                 <ul class="list-disc pl-4 text-sm">
-                    <li>Plan de charge : Validé</li>
-                    <li>FEB : Document validé</li>
-                    <li>Note de cadrage : En cours</li>
-                    <li>Cahier des charges : Livré</li>
-                    <li>DAT : Soumis à validation</li>
-                    <li>Documentations utilisateurs : En rédaction</li>
+                    <li>Plan de charge : {% if details_projet.maturite.dossier_fonctionnel.plan_de_charge %}Validé{% else %}Non validé{% endif %}</li>
+                    <li>FEB : {% if details_projet.maturite.dossier_fonctionnel.feb %}Validé{% else %}Non validé{% endif %}</li>
+                    <li>Note de cadrage : {% if details_projet.maturite.dossier_fonctionnel.note_de_cadrage %}Validé{% else %}Non validé{% endif %}</li>
+                    <li>Cahier des charges : {% if details_projet.maturite.dossier_fonctionnel.cahier_des_charges %}Validé{% else %}Non validé{% endif %}</li>
+                    <li>DAT : {% if details_projet.maturite.dossier_fonctionnel.dat %}Validé{% else %}Non validé{% endif %}</li>
+                    <li>Documentation utilisateurs : {% if details_projet.maturite.dossier_fonctionnel.documentation_utilisateurs %}Validé{% else %}Non validé{% endif %}</li>
                 </ul>
                 <h3 class="font-semibold mt-4 mb-1">Dossier SI et SSI</h3>
                 <ul class="list-disc pl-4 text-sm">
-                    <li>Demande SSO : Complétée</li>
-                    <li>Demande d'hébergement : En attente</li>
-                    <li>Fiche registre : Non démarrée</li>
-                    <li>Note d'orientation SSI : Validée</li>
-                    <li>Analyse de risque : En cours</li>
-                    <li>Homologation : Planifiée</li>
+                    <li>Demande SSO : {% if details_projet.maturite.dossier_si_et_ssi.demande_sso %}Complétée{% else %}Non complétée{% endif %}</li>
+                    <li>Demande d'hébergement : {% if details_projet.maturite.dossier_si_et_ssi.demande_hebergement %}Complétée{% else %}Non complétée{% endif %}</li>
+                    <li>Fiche registre : {% if details_projet.maturite.dossier_si_et_ssi.fiche_registre %}Complétée{% else %}Non complétée{% endif %}</li>
+                    <li>Note d'orientation SSI : {% if details_projet.maturite.dossier_si_et_ssi.note_orientation_ssi %}Complétée{% else %}Non complétée{% endif %}</li>
+                    <li>Analyse de risque : {% if details_projet.maturite.dossier_si_et_ssi.analyse_de_risque %}Complétée{% else %}Non complétée{% endif %}</li>
+                    <li>Homologation : {% if details_projet.maturite.dossier_si_et_ssi.homologation %}Complétée{% else %}Non complétée{% endif %}</li>
                 </ul>
             </div>
         </section>
@@ -56,12 +62,12 @@
         <section class="bg-white shadow-md p-4 rounded-lg">
             <h2 class="text-xl font-bold mb-5">Caractéristiques techniques</h2>
             <div class="text-sm">
-                <p><strong>OS Serveur :</strong> Linux</p>
-                <p><strong>Type d'hébergement :</strong> Cloud</p>
-                <p><strong>Technologies utilisées :</strong> Django, PostgreSQL</p>
-                <p><strong>Base de données :</strong> PostgreSQL</p>
-                <p><strong>Authentification :</strong> LDAP</p>
-                <p><strong>Budget :</strong> 100,000 €</p>
+                <p><strong>OS Serveur :</strong> {{ details_projet.caracteristiques_techniques.os_serveur }}</p>
+                <p><strong>Type d'hébergement :</strong> {{ details_projet.caracteristiques_techniques.type_hebergement }}</p>
+                <p><strong>Technologies utilisées :</strong> {{ details_projet.caracteristiques_techniques.techno_utilisees|join:", " }}</p>
+                <p><strong>Base de données :</strong> {{ details_projet.caracteristiques_techniques.bdd }}</p>
+                <p><strong>Authentification :</strong> {{ details_projet.caracteristiques_techniques.authentification }}</p>
+                <p><strong>Budget :</strong> {{ details_projet.budget }}</p>
             </div>
         </section>
 
@@ -72,24 +78,24 @@
                 <div>
                     <label for="projet-avance" class="block mb-2 font-semibold">Avancée du projet :</label>
                     <select id="projet-avance" class="fr-select w-full">
-                        <option>Demande</option>
-                        <option>Cadrage</option>
-                        <option>Étude de faisabilité</option>
-                        <option>Déploiement</option>
-                        <option>Conception</option>
-                        <option>Réalisation</option>
-                        <option>Exploitation</option>
+                        <option {% if details_projet.avancement_projet == "Demande" %}selected{% endif %}>Demande</option>
+                        <option {% if details_projet.avancement_projet == "Cadrage" %}selected{% endif %}>Cadrage</option>
+                        <option {% if details_projet.avancement_projet == "Étude de faisabilité" %}selected{% endif %}>Étude de faisabilité</option>
+                        <option {% if details_projet.avancement_projet == "Déploiement" %}selected{% endif %}>Déploiement</option>
+                        <option {% if details_projet.avancement_projet == "Conception" %}selected{% endif %}>Conception</option>
+                        <option {% if details_projet.avancement_projet == "Réalisation" %}selected{% endif %}>Réalisation</option>
+                        <option {% if details_projet.avancement_projet == "Exploitation" %}selected{% endif %}>Exploitation</option>
                     </select>
                 </div>
                 <div>
                     <label for="homologation-avance" class="block mb-2 font-semibold">Avancée de l'homologation :</label>
                     <select id="homologation-avance" class="fr-select w-full">
-                        <option>Note d'orientation SSI</option>
-                        <option>Analyse de risque</option>
-                        <option>Socle de sécurité</option>
-                        <option>Dossier d'architecture</option>
-                        <option>Audit</option>
-                        <option>Avis de décision d'homologation</option>
+                        <option {% if details_projet.avancement_homologation == "Note d'orientation SSI" %}selected{% endif %}>Note d'orientation SSI</option>
+                        <option {% if details_projet.avancement_homologation == "Analyse de risque" %}selected{% endif %}>Analyse de risque</option>
+                        <option {% if details_projet.avancement_homologation == "Socle de sécurité" %}selected{% endif %}>Socle de sécurité</option>
+                        <option {% if details_projet.avancement_homologation == "Dossier d'architecture" %}selected{% endif %}>Dossier d'architecture</option>
+                        <option {% if details_projet.avancement_homologation == "Audit" %}selected{% endif %}>Audit</option>
+                        <option {% if details_projet.avancement_homologation == "Avis de décision d'homologation" %}selected{% endif %}>Avis de décision d'homologation</option>
                     </select>
                 </div>
             </div>
