@@ -7,7 +7,6 @@
     <title>{{ projet.titre }}</title>
     <!-- Inclusion de DSFR et Tailwind CSS -->
     <link href="{% static 'dsfr.min.css' %}" rel="stylesheet" />
-
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -16,31 +15,29 @@
 
     <!-- Main content -->
     <main class="fr-container flex flex-col items-center mt-20 mb-20">
-
-
         <h1 class="text-3xl font-bold mb-12">{{ projet.titre }}</h1>
         <p class="text-lg text-gray-700 mb-8">{{ projet.description }}</p>
 
         <div class="mt-12 w-full max-w-4xl">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <!-- Connexion -->
+                <!-- Organisation -->
                 <div class="fr-card fr-card--no-arrow fr-enlarge-link" style="width: 250px; height: 250px;">
                     <div class="fr-card__body">
                         <div class="fr-card__content">
                             <h3 class="fr-card__title">
-                                <a href="#">Connexion</a>
+                                <a href="#">Organisation</a>
                             </h3>
-                            <p class="fr-card__desc">Connectez-vous pour en savoir plus.</p>
+                            <p class="fr-card__desc">Découvrez l'organisation derrière ce projet.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Vidéo -->
-                <div class="fr-card fr-card--no-arrow fr-enlarge-link" style="width: 250px; height: 300px;">
+                <!-- Vidéo de présentation -->
+                <div class="fr-card fr-card--no-arrow fr-enlarge-link" style="width: 250px; height: 250px;">
                     <div class="fr-card__body">
                         <div class="fr-card__content">
                             <h3 class="fr-card__title">
-                                <a href="{% static 'videos/sample_video.mp4' %}" target="_blank">Vidéo</a>
+                                <a href="{% static 'videos/sample_video.mp4' %}" target="_blank">Vidéo de présentation</a>
                             </h3>
                             <p class="fr-card__desc">Visionnez la vidéo de présentation du projet.</p>
                         </div>
@@ -52,11 +49,9 @@
                     <div class="fr-card__body">
                         <div class="fr-card__content">
                             <h3 class="fr-card__title">
-                                <a href="{% url 'info_projet' categorie_slug=categorie_slug projet_slug=projet.slug %}">
-                                    Descriptif complet
-                                </a>
+                                <a href="{% url 'info_projet' projet_id=projet.id %}">Descriptif complet</a>
                             </h3>
-                            <p class="fr-card__desc">Consultez le détail complet de ce projet.</p>
+                            <p class="fr-card__desc">Accédez aux détails complets du projet.</p>
                         </div>
                     </div>
                 </div>

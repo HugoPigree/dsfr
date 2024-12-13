@@ -1,75 +1,114 @@
 from django import forms
+from .models import (
+    Projets,
+    Organisation,
+    PlanningPrevisionnel,
+    MaturiteProjet,
+    CaracteristiquesTechniques,
+    Budget,
+    AvancementProjet,
 
-class ProjetForm(forms.Form):
-    # Champs principaux
-    titre = forms.CharField(label="Titre", max_length=255)
+    Categorie,
+)
 
-    description = forms.CharField(widget=forms.Textarea, label="Description")
+# Widget personnalisé pour les champs de type date
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
-    # Catégorie
-    categorie_slug = forms.ChoiceField(
-        choices=[
-            ('medical', 'Médical'),
-            ('rh', 'RH'),
-            ('autres', 'Autres'),
-            ('drhfs', 'DRHFS'),
-            ('utilisateurs', 'Utilisateurs'),
-        ],
-        label="Catégorie"
-    )
+# Formulaire pour le modèle Projets
+class ProjetForm(forms.ModelForm):
+    class Meta:
+        model = Projets
+        fields = [
+            "titre",
+            "description",
+            "priorite",
+            "date_debut",
+            "date_fin_souhaitee",
+            "categorie",
+        ]
+        widgets = {
+            "date_debut": DateInput(attrs={"class": "form-control", "placeholder": "jj/mm/aaaa"}),
+            "date_fin_souhaitee": DateInput(attrs={"class": "form-control", "placeholder": "jj/mm/aaaa"}),
+        }
 
-    # Détails du projet
-    priorite = forms.ChoiceField(choices=[('Haute', 'Haute'), ('Moyenne', 'Moyenne'), ('Basse', 'Basse')])
-    date_debut = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Date de début")
-    date_fin_souhaitee = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Date de fin souhaitée")
-    organisation = forms.CharField(label="Organisation", max_length=255)
-    planning_previsionnel = forms.CharField(label="Planning prévisionnel", max_length=255)
-    budget = forms.CharField(label="Budget", max_length=50)
+# Formulaire pour le modèle Organisation
+class OrganisationForm(forms.ModelForm):
+    class Meta:
+        model = Organisation
+        fields = ["sd", "moa", "moe", "prestataire"]
+        widgets = {
+            "sd": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "moa": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "moe": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "prestataire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+        }
 
-    # Maturité - Dossier fonctionnel
-    plan_de_charge = forms.BooleanField(label="Plan de charge", required=False)
-    feb = forms.BooleanField(label="FEB", required=False)
-    note_de_cadrage = forms.BooleanField(label="Note de cadrage", required=False)
-    cahier_des_charges = forms.BooleanField(label="Cahier des charges", required=False)
-    dat = forms.BooleanField(label="DAT", required=False)
-    documentation_utilisateurs = forms.BooleanField(label="Documentation utilisateurs", required=False)
+# Formulaire pour le modèle PlanningPrevisionnel
+class PlanningForm(forms.ModelForm):
+    class Meta:
+        model = PlanningPrevisionnel
+        fields = ["duree_prevue", "nombre_etp_estime"]
+        widgets = {
+            "duree_prevue": forms.Textarea(attrs={"class": "form-control", "rows": 2}),  # Zone de texte
+            "nombre_etp_estime": forms.NumberInput(attrs={"class": "form-control"}),
+        }
 
-    # Maturité - Dossier SI et SSI
-    demande_sso = forms.BooleanField(label="Demande SSO", required=False)
-    demande_hebergement = forms.BooleanField(label="Demande d'hébergement", required=False)
-    fiche_registre = forms.BooleanField(label="Fiche registre", required=False)
-    note_orientation_ssi = forms.BooleanField(label="Note d'orientation SSI", required=False)
-    analyse_de_risque = forms.BooleanField(label="Analyse de risque", required=False)
-    homologation = forms.BooleanField(label="Homologation", required=False)
+# Formulaire pour le modèle MaturiteProjet
+class MaturiteForm(forms.ModelForm):
+    class Meta:
+        model = MaturiteProjet
+        fields = [
+            "plan_de_charge",
+            "feb",
+            "note_de_cadrage",
+            "cahier_des_charges",
+            "fonctionne",
+            "dat",
+            "documentation_utilisateurs",
+            "demande_sso",
+            "demande_hebergement",
+            "fiche_registre",
+            "note_orientation_ssi",
+            "analyse_de_risque",
+            "homologation",
+        ]
+        widgets = {
+            field: forms.Textarea(attrs={"class": "form-control", "rows": 2}) for field in fields
+        }
 
-    # Caractéristiques techniques
-    os_serveur = forms.CharField(label="OS Serveur", max_length=50)
-    type_hebergement = forms.CharField(label="Type d'hébergement", max_length=50)
-    techno_utilisees = forms.CharField(widget=forms.Textarea, label="Technologies utilisées")
-    bdd = forms.CharField(label="Base de données", max_length=50)
-    authentification = forms.CharField(label="Authentification", max_length=50)
+# Formulaire pour le modèle CaracteristiquesTechniques
+class CaracteristiquesForm(forms.ModelForm):
+    class Meta:
+        model = CaracteristiquesTechniques
+        fields = [
+            "os_serveur",
+            "type_hebergement",
+            "techno_utilisees",
+            "authentification",
+        ]
+        widgets = {
+            "os_serveur": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "type_hebergement": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "techno_utilisees": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "authentification": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+        }
 
-    # Avancements
-    avancement_projet = forms.ChoiceField(
-        choices=[
-            ('Demande', 'Demande'),
-            ('Cadrage', 'Cadrage'),
-            ('Étude de faisabilité', 'Étude de faisabilité'),
-            ('Déploiement', 'Déploiement'),
-            ('Conception', 'Conception'),
-            ('Réalisation', 'Réalisation'),
-            ('Exploitation', 'Exploitation'),
-        ],
-        label="Avancement du projet"
-    )
-    avancement_homologation = forms.ChoiceField(
-        choices=[
-            ('Note d\'orientation SSI', 'Note d\'orientation SSI'),
-            ('Analyse de risque', 'Analyse de risque'),
-            ('Socle de sécurité', 'Socle de sécurité'),
-            ('Dossier d\'architecture', 'Dossier d\'architecture'),
-            ('Audit', 'Audit'),
-            ('Avis de décision d\'homologation', 'Avis de décision d\'homologation'),
-        ],
-        label="Avancement de l'homologation"
-    )
+# Formulaire pour le modèle Budget
+class BudgetForm(forms.ModelForm):
+    class Meta:
+        model = Budget
+        fields = ["hebergement", "homologation"]
+        widgets = {
+            "hebergement": forms.Textarea(attrs={"class": "form-control", "rows": 2}),  # Zone de texte
+            "homologation": forms.Textarea(attrs={"class": "form-control", "rows": 2}),  # Zone de texte
+        }
+
+# Formulaire pour le modèle AvancementProjet
+class AvancementForm(forms.ModelForm):
+    class Meta:
+        model = AvancementProjet
+        fields = ["choix"]
+        widgets = {
+            "choix": forms.Select(attrs={"class": "form-select"}),
+        }

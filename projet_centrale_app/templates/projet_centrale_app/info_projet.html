@@ -15,91 +15,95 @@
     {% include 'projet_centrale_app/partials/header.html' %}
 
     <!-- Main content -->
-    <main class="fr-container grid grid-cols-1 xl:grid-cols-3 gap-6 p-4 mt-8 mb-16">
+    <main class="fr-container my-8 space-y-10">
         <!-- Titre principal -->
-        <div class="col-span-3 text-center mb-8">
+        <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800">{{ projet.titre }}</h1>
         </div>
 
         <!-- Détails du projet -->
-        <section class="bg-white shadow-md p-4 rounded-lg">
-            <h2 class="text-xl font-bold mb-5">Détails du projet</h2>
-            <div class="text-sm">
-                <p><strong>Priorité :</strong> {{ details_projet.priorite }}</p><br>
-                <p><strong>Date de début :</strong> {{ details_projet.date_debut }}</p><br>
-                <p><strong>Date de fin souhaitée :</strong> {{ details_projet.date_fin_souhaitee }}</p><br>
-                <p><strong>Organisation :</strong> {{ details_projet.organisation }}</p><br>
-                <p><strong>Planning prévisionnel :</strong> {{ details_projet.planning_previsionnel }}</p>
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Détails du projet</h2>
+            <div class="grid grid-cols-1 gap-2">
+                <p><strong>Priorité :</strong> {{ projet.priorite }}</p>
+                <p><strong>Date de début :</strong> {{ projet.date_debut }}</p>
+                <p><strong>Date de fin souhaitée :</strong> {{ projet.date_fin_souhaitee }}</p>
+                <p><strong>Catégorie :</strong> {{ projet.categorie.nom }}</p>
+                <p><strong>Description :</strong> {{ projet.description }}</p>
+            </div>
+        </section>
+
+        <!-- Organisation -->
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Organisation</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <p><strong>SD :</strong> {{ organisation.sd }}</p>
+                <p><strong>MOA :</strong> {{ organisation.moa }}</p>
+                <p><strong>MOE :</strong> {{ organisation.moe }}</p>
+                <p><strong>Prestataire :</strong> {{ organisation.prestataire }}</p>
+            </div>
+        </section>
+
+        <!-- Planning prévisionnel -->
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Planning prévisionnel</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <p><strong>Durée prévue :</strong> {{ planning.duree_prevue }}</p>
+                <p><strong>Nombre d'ETP estimé :</strong> {{ planning.nombre_etp_estime }}</p>
             </div>
         </section>
 
         <!-- Maturité du projet -->
-        <section class="bg-white shadow-md p-4 rounded-lg">
-            <h2 class="text-xl font-bold mb-2">Maturité du projet</h2>
-            <div>
-                <h3 class="font-semibold mb-1">Dossier fonctionnel</h3>
-                <ul class="list-disc pl-4 text-sm">
-                    <li>Plan de charge : {% if details_projet.maturite.dossier_fonctionnel.plan_de_charge %}Validé{% else %}Non validé{% endif %}</li>
-                    <li>FEB : {% if details_projet.maturite.dossier_fonctionnel.feb %}Validé{% else %}Non validé{% endif %}</li>
-                    <li>Note de cadrage : {% if details_projet.maturite.dossier_fonctionnel.note_de_cadrage %}Validé{% else %}Non validé{% endif %}</li>
-                    <li>Cahier des charges : {% if details_projet.maturite.dossier_fonctionnel.cahier_des_charges %}Validé{% else %}Non validé{% endif %}</li>
-                    <li>DAT : {% if details_projet.maturite.dossier_fonctionnel.dat %}Validé{% else %}Non validé{% endif %}</li>
-                    <li>Documentation utilisateurs : {% if details_projet.maturite.dossier_fonctionnel.documentation_utilisateurs %}Validé{% else %}Non validé{% endif %}</li>
-                </ul>
-                <h3 class="font-semibold mt-4 mb-1">Dossier SI et SSI</h3>
-                <ul class="list-disc pl-4 text-sm">
-                    <li>Demande SSO : {% if details_projet.maturite.dossier_si_et_ssi.demande_sso %}Complétée{% else %}Non complétée{% endif %}</li>
-                    <li>Demande d'hébergement : {% if details_projet.maturite.dossier_si_et_ssi.demande_hebergement %}Complétée{% else %}Non complétée{% endif %}</li>
-                    <li>Fiche registre : {% if details_projet.maturite.dossier_si_et_ssi.fiche_registre %}Complétée{% else %}Non complétée{% endif %}</li>
-                    <li>Note d'orientation SSI : {% if details_projet.maturite.dossier_si_et_ssi.note_orientation_ssi %}Complétée{% else %}Non complétée{% endif %}</li>
-                    <li>Analyse de risque : {% if details_projet.maturite.dossier_si_et_ssi.analyse_de_risque %}Complétée{% else %}Non complétée{% endif %}</li>
-                    <li>Homologation : {% if details_projet.maturite.dossier_si_et_ssi.homologation %}Complétée{% else %}Non complétée{% endif %}</li>
-                </ul>
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Maturité du projet</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <p><strong>Plan de charge :</strong> {{ maturite.plan_de_charge }}</p>
+                <p><strong>FEB :</strong> {{ maturite.feb }}</p>
+                <p><strong>Note de cadrage :</strong> {{ maturite.note_de_cadrage }}</p>
+                <p><strong>Cahier des charges :</strong> {{ maturite.cahier_des_charges }}</p>
+                <p><strong>Fonctionne :</strong> {{ maturite.fonctionne }}</p>
+                <p><strong>DAT :</strong> {{ maturite.dat }}</p>
+                <p><strong>Documentation utilisateurs :</strong> {{ maturite.documentation_utilisateurs }}</p>
+                <p><strong>Demande SSO :</strong> {{ maturite.demande_sso }}</p>
+                <p><strong>Demande d'hébergement :</strong> {{ maturite.demande_hebergement }}</p>
+                <p><strong>Fiche registre :</strong> {{ maturite.fiche_registre }}</p>
+                <p><strong>Note d'orientation SSI :</strong> {{ maturite.note_orientation_ssi }}</p>
+                <p><strong>Analyse de risque :</strong> {{ maturite.analyse_de_risque }}</p>
+                <p><strong>Homologation :</strong> {{ maturite.homologation }}</p>
             </div>
         </section>
 
-        <!-- Caractéristiques techniques et Budget -->
-        <section class="bg-white shadow-md p-4 rounded-lg">
-            <h2 class="text-xl font-bold mb-5">Caractéristiques techniques</h2>
-            <div class="text-sm">
-                <p><strong>OS Serveur :</strong> {{ details_projet.caracteristiques_techniques.os_serveur }}</p><br>
-                <p><strong>Type d'hébergement :</strong> {{ details_projet.caracteristiques_techniques.type_hebergement }}</p><br>
-                <p><strong>Technologies utilisées :</strong> {{ details_projet.caracteristiques_techniques.techno_utilisees|join:", " }}</p><br>
-                <p><strong>Base de données :</strong> {{ details_projet.caracteristiques_techniques.bdd }}</p><br>
-                <p><strong>Authentification :</strong> {{ details_projet.caracteristiques_techniques.authentification }}</p><br>
-                <p><strong>Budget :</strong> {{ details_projet.budget }}</p>
+        <!-- Caractéristiques techniques -->
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Caractéristiques techniques</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <p><strong>OS Serveur :</strong> {{ caracteristiques.os_serveur }}</p>
+                <p><strong>Type d'hébergement :</strong> {{ caracteristiques.type_hebergement }}</p>
+                <p><strong>Technologies utilisées :</strong> {{ caracteristiques.techno_utilisees }}</p>
+                <p><strong>Authentification :</strong> {{ caracteristiques.authentification }}</p>
             </div>
         </section>
 
-        <!-- Avancées -->
-        <section class="bg-white shadow-md p-4 rounded-lg col-span-3">
-            <h2 class="text-xl font-bold mb-5">Avancements</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Budget -->
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Budget</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <p><strong>Hébergement :</strong> {{ budget.hebergement }}</p>
+                <p><strong>Homologation :</strong> {{ budget.homologation }}</p>
+            </div>
+        </section>
+
+        <!-- Avancements -->
+        <!-- Avancements -->
+        <section class="bg-white shadow-md p-6 rounded-lg">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Avancements</h2>
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label for="projet-avance" class="block mb-2 font-semibold">Avancée du projet :</label>
-                    <select id="projet-avance" class="fr-select w-full">
-                        <option {% if details_projet.avancement_projet == "Demande" %}selected{% endif %}>Demande</option>
-                        <option {% if details_projet.avancement_projet == "Cadrage" %}selected{% endif %}>Cadrage</option>
-                        <option {% if details_projet.avancement_projet == "Étude de faisabilité" %}selected{% endif %}>Étude de faisabilité</option>
-                        <option {% if details_projet.avancement_projet == "Déploiement" %}selected{% endif %}>Déploiement</option>
-                        <option {% if details_projet.avancement_projet == "Conception" %}selected{% endif %}>Conception</option>
-                        <option {% if details_projet.avancement_projet == "Réalisation" %}selected{% endif %}>Réalisation</option>
-                        <option {% if details_projet.avancement_projet == "Exploitation" %}selected{% endif %}>Exploitation</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="homologation-avance" class="block mb-2 font-semibold">Avancée de l'homologation :</label>
-                    <select id="homologation-avance" class="fr-select w-full">
-                        <option {% if details_projet.avancement_homologation == "Note d'orientation SSI" %}selected{% endif %}>Note d'orientation SSI</option>
-                        <option {% if details_projet.avancement_homologation == "Analyse de risque" %}selected{% endif %}>Analyse de risque</option>
-                        <option {% if details_projet.avancement_homologation == "Socle de sécurité" %}selected{% endif %}>Socle de sécurité</option>
-                        <option {% if details_projet.avancement_homologation == "Dossier d'architecture" %}selected{% endif %}>Dossier d'architecture</option>
-                        <option {% if details_projet.avancement_homologation == "Audit" %}selected{% endif %}>Audit</option>
-                        <option {% if details_projet.avancement_homologation == "Avis de décision d'homologation" %}selected{% endif %}>Avis de décision d'homologation</option>
-                    </select>
+                    <p><strong>Avancée du projet :</strong> {{ avancement_projet.choix }}</p>
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->

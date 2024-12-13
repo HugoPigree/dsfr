@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'projet_centrale.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'centrale',  # Le nom de votre base de données
+        'USER': 'postgres',
+        'PASSWORD': '1234',  # Mot de passe de l'utilisateur
+        'HOST': 'localhost',  # Hôte (localhost si local)
+        'PORT': '5433',  # Port par défaut pour PostgreSQL
     }
 }
 
@@ -106,12 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
+LANGUAGE_CODE = 'fr-fr'
+DATE_FORMAT = 'd/m/Y'
+USE_L10N = False
 USE_TZ = True
 
 
