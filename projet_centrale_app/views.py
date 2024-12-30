@@ -8,7 +8,6 @@ from .models import (
     CaracteristiquesTechniques,
     Budget,
     AvancementProjet,
-
     Categorie,
 )
 from .forms import (
@@ -21,6 +20,7 @@ from .forms import (
     AvancementForm,
 )
 from django.urls import reverse
+from django.contrib import messages
 
 # Vue pour la page d'accueil
 def index(request):
@@ -47,6 +47,15 @@ def projet_detail(request, projet_id):
         {"projet": projet, "categorie": categorie},
     )
 
+# Vue pour supprimer un projet
+def supprimer_projet(request, pk):
+    projet = get_object_or_404(Projets, pk=pk)
+    if request.method == "POST":
+        projet.delete()
+        messages.success(request, f"Le projet '{projet.titre}' a été supprimé avec succès.")
+        return redirect('categories_projets', categorie_slug=projet.categorie.slug)
+    return redirect('index')
+
 # Vue pour les informations complètes du projet
 def info_projet(request, projet_id):
     projet = get_object_or_404(Projets, id=projet_id)
@@ -56,7 +65,6 @@ def info_projet(request, projet_id):
     caracteristiques = CaracteristiquesTechniques.objects.filter(projet=projet).first()
     budget = Budget.objects.filter(projet=projet).first()
     avancement_projet = AvancementProjet.objects.filter(projet=projet).first()
-
 
     return render(
         request,
@@ -69,7 +77,6 @@ def info_projet(request, projet_id):
             "caracteristiques": caracteristiques,
             "budget": budget,
             "avancement_projet": avancement_projet,
-
         },
     )
 
@@ -84,7 +91,6 @@ def ajouter_projet(request):
         budget_form = BudgetForm(request.POST)
         avancement_projet_form = AvancementForm(request.POST)
 
-
         if (
             projet_form.is_valid()
             and organisation_form.is_valid()
@@ -93,7 +99,6 @@ def ajouter_projet(request):
             and caracteristiques_form.is_valid()
             and budget_form.is_valid()
             and avancement_projet_form.is_valid()
-
         ):
             projet = projet_form.save()
             organisation = organisation_form.save(commit=False)
@@ -120,8 +125,6 @@ def ajouter_projet(request):
             avancement_projet.projet = projet
             avancement_projet.save()
 
-
-
             return redirect("index")
         else:
             # Log errors for debugging
@@ -132,8 +135,6 @@ def ajouter_projet(request):
             print("Caractéristiques Form Errors:", caracteristiques_form.errors)
             print("Budget Form Errors:", budget_form.errors)
             print("Avancement Projet Form Errors:", avancement_projet_form.errors)
-            print("Avancement Homologation Form Errors:", avancement_homologation_form.errors)
-            print("POST Data:", request.POST)
     else:
         projet_form = ProjetForm()
         organisation_form = OrganisationForm()
@@ -142,7 +143,6 @@ def ajouter_projet(request):
         caracteristiques_form = CaracteristiquesForm()
         budget_form = BudgetForm()
         avancement_projet_form = AvancementForm()
-
 
     return render(
         request,
@@ -155,6 +155,62 @@ def ajouter_projet(request):
             "caracteristiques_form": caracteristiques_form,
             "budget_form": budget_form,
             "avancement_projet_form": avancement_projet_form,
+        },
+    )
+def modifier_projet(request, projet_id):
+    projet = get_object_or_404(Projets, id=projet_id)
+    organisation = Organisation.objects.filter(projet=projet).first()
+    planning = PlanningPrevisionnel.objects.filter(projet=projet).first()
+    maturite = MaturiteProjet.objects.filter(projet=projet).first()
+    caracteristiques = CaracteristiquesTechniques.objects.filter(projet=projet).first()
+    budget = Budget.objects.filter(projet=projet).first()
+    avancement_projet = AvancementProjet.objects.filter(projet=projet).first()
 
+    if request.method == "POST":
+        projet_form = ProjetForm(request.POST, instance=projet)
+        organisation_form = OrganisationForm(request.POST, instance=organisation)
+        planning_form = PlanningForm(request.POST, instance=planning)
+        maturite_form = MaturiteForm(request.POST, instance=maturite)
+        caracteristiques_form = CaracteristiquesForm(request.POST, instance=caracteristiques)
+        budget_form = BudgetForm(request.POST, instance=budget)
+        avancement_projet_form = AvancementForm(request.POST, instance=avancement_projet)
+
+        if (
+            projet_form.is_valid()
+            and organisation_form.is_valid()
+            and planning_form.is_valid()
+            and maturite_form.is_valid()
+            and caracteristiques_form.is_valid()
+            and budget_form.is_valid()
+            and avancement_projet_form.is_valid()
+        ):
+            projet_form.save()
+            organisation_form.save()
+            planning_form.save()
+            maturite_form.save()
+            caracteristiques_form.save()
+            budget_form.save()
+            avancement_projet_form.save()
+            return redirect('projet_detail', projet_id=projet.id)
+    else:
+        projet_form = ProjetForm(instance=projet)
+        organisation_form = OrganisationForm(instance=organisation)
+        planning_form = PlanningForm(instance=planning)
+        maturite_form = MaturiteForm(instance=maturite)
+        caracteristiques_form = CaracteristiquesForm(instance=caracteristiques)
+        budget_form = BudgetForm(instance=budget)
+        avancement_projet_form = AvancementForm(instance=avancement_projet)
+
+    return render(
+        request,
+        "projet_centrale_app/modifier_projet.html",
+        {
+            "projet_form": projet_form,
+            "organisation_form": organisation_form,
+            "planning_form": planning_form,
+            "maturite_form": maturite_form,
+            "caracteristiques_form": caracteristiques_form,
+            "budget_form": budget_form,
+            "avancement_projet_form": avancement_projet_form,
         },
     )

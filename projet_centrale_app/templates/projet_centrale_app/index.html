@@ -16,14 +16,25 @@
 
     <!-- Main content -->
     <main class="fr-container flex flex-col items-center mt-10 mb-10">
-        <h1 class="text-3xl font-bold text-center mb-20">PAGE D'ACCUEIL</h1>
+        <h1 class="text-3xl font-bold text-center mb-20">PAGE _D'ACCUEIL</h1>
         <div class="flex flex-wrap justify-center gap-16 mb-16">
             {% for categorie in categories %}
             <a
               class="flex flex-col items-center justify-center w-40 h-40 rounded-full bg-gray-200 hover:bg-white transition-all shadow-lg"
               href="{% url 'categories_projets' categorie.slug %}"
             >
-
+                <!-- Ajouter les images pour chaque catégorie -->
+                {% if categorie.nom == "RH" %}
+                    <img src="{% static 'img/social.png' %}" alt="RH" class="w-16 h-16 mb-2">
+                {% elif categorie.nom == "Autres" %}
+                    <img src="{% static 'img/gestion-de-projet.png' %}" alt="Autres" class="w-16 h-16 mb-2">
+                {% elif categorie.nom == "Médical" %}
+                    <img src="{% static 'img/symbole-medical.png' %}" alt="Médical" class="w-16 h-16 mb-2">
+                {% elif categorie.nom == "DRHFS" %}
+                    <img src="{% static 'img/policier.png' %}" alt="DRHFS" class="w-16 h-16 mb-2">
+                {% elif categorie.nom == "Utilisateurs" %}
+                    <img src="{% static 'img/user-interface.png' %}" alt="Utilisateurs" class="w-16 h-16 mb-2">
+                {% endif %}
                 <span class="font-semibold text-black">{{ categorie.nom }}</span>
             </a>
             {% endfor %}

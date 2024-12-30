@@ -7,6 +7,8 @@ urlpatterns = [
     path('', views.index, name='index'),  # Page d'accueil
     path('ajouter-projet/', views.ajouter_projet, name='ajouter_projet'),  # Ajouter un projet
     path('projet/<int:projet_id>/', views.projet_detail, name='projet_detail'),  # Détails d'un projet
+    path('projet/<int:projet_id>/modifier/', views.modifier_projet, name='modifier_projet'),
     path('projet/<int:projet_id>/info/', views.info_projet, name='info_projet'),  # Informations complètes sur un projet
+    path('projet/<int:pk>/supprimer/', views.supprimer_projet, name='supprimer_projet'),  # Supprimer un projet
     re_path(r'^categorie/(?P<categorie_slug>[-\w]+)/$', views.categorie_detail, name='categories_projets'),  # Vue des catégories
 ]

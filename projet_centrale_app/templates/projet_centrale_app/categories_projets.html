@@ -21,9 +21,10 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for projet in projets %}
-            <div class="fr-card fr-enlarge-link">
+            <div class="fr-card">
                 <div class="fr-card__body">
                     <div class="fr-card__content">
+                        <!-- Le titre est cliquable -->
                         <h3 class="fr-card__title">
                             <a href="{% url 'projet_detail' projet_id=projet.id %}">
                                 {{ projet.titre }}
@@ -31,6 +32,19 @@
                         </h3>
                         <p class="fr-card__desc">{{ projet.description }}</p>
                     </div>
+                </div>
+                <div class="fr-card__footer flex justify-between">
+                    <!-- Bouton Modifier -->
+                    <a href="{% url 'modifier_projet' projet.id %}" class="fr-btn fr-btn--secondary">
+                        Modifier
+                    </a>
+                    <!-- Bouton Supprimer -->
+                    <form action="{% url 'supprimer_projet' projet.id %}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
+                        {% csrf_token %}
+                        <button type="submit" class="fr-btn fr-btn--error">
+                            Supprimer
+                        </button>
+                    </form>
                 </div>
             </div>
             {% empty %}
