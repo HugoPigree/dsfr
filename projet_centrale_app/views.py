@@ -1,5 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.template.loader import get_template
+from django.template.loader import render_to_string
+from django.contrib.staticfiles import finders
+from xhtml2pdf import pisa
+from django.contrib.auth.decorators import login_required
+
 from .models import (
     Projets,
     Organisation,
@@ -214,3 +220,112 @@ def modifier_projet(request, projet_id):
             "avancement_projet_form": avancement_projet_form,
         },
     )
+
+
+def telecharger_fiche_projet(request, projet_id):
+    projet = get_object_or_404(Projets, id=projet_id)
+    organisation = Organisation.objects.filter(projet=projet).first()
+    planning = PlanningPrevisionnel.objects.filter(projet=projet).first()
+    maturite = MaturiteProjet.objects.filter(projet=projet).first()
+    caracteristiques = CaracteristiquesTechniques.objects.filter(projet=projet).first()
+    budget = Budget.objects.filter(projet=projet).first()
+
+    context = {
+        'projet': projet,
+        'organisation': organisation,
+        'planning': planning,
+        'maturite': maturite,
+        'caracteristiques': caracteristiques,
+        'budget': budget,
+        'avancement_projet': AvancementProjet.objects.filter(projet=projet).first(),
+
+    }
+
+    template_path = 'projet_centrale_app/fiche_projet.html'
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="fiche_projet_{projet_id}.pdf"'
+
+    # Charger le template en HTML
+    html = render_to_string(template_path, context)
+
+    # Inclure les fichiers statiques dans xhtml2pdf
+    def link_callback(uri, rel):
+        if uri.startswith("http://") or uri.startswith("https://"):
+            return uri
+        elif uri.startswith("/static/"):
+            path = finders.find(uri.replace("/static/", ""))
+            if path:
+                return path
+        return uri
+
+    pisa_status = pisa.CreatePDF(
+        html, dest=response, link_callback=link_callback
+    )
+
+    if pisa_status.err:
+        return HttpResponse('Erreur dans la génération du PDF', status=500)
+    return response
+
+
+
+@login_required
+def create_user_view(request):
+    created_users = []
+    errors = []
+
+    if request.method == "POST":
+        form = CreateUsersForm(request.POST)
+        if form.is_valid():
+            matricule = form.cleaned_data["matricule"]
+            password = form.cleaned_data["password"]
+
+            # Check if the matricule already exists
+            if not users.objects.filter(matricule=matricule).exists():
+                # Create the new user
+                user = users.objects.create_user(matricule=matricule, password=password)
+                created_users.append(user)
+            else:
+                errors.append(f"Matricule {matricule} already exists.")
+        else:
+            errors.append("Form data is not valid.")
+
+    else:
+        form = CreateUsersForm()
+
+    context = {
+        "form": form,
+        "created_users": created_users,
+        "errors": errors,
+    }
+    return render(request, "create_users.html", context)
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect("/login")
+
+
+def login_view(request):
+    # set admin password to admin
+    if not users.objects.filter(matricule="admin").exists():
+        users.objects.create_user(
+            "admin",
+            "admin",
+        )
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            matricule = cleaned_data.get("matricule")
+            password = cleaned_data.get("password")
+            user = authenticate(request, matricule=matricule, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/formulaires")
+            else:
+                return render(
+                    request,
+                    "login_form.html",
+                    {"form": form, "error": "Invalid credentials"},
+                )
+    return render(request, "login_form.html", {"form": LoginForm()})

@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import BaseUserManager
+import hashlib
+import os
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=100, unique=True)
@@ -116,3 +119,52 @@ class AvancementProjet(models.Model):
         return f"{self.projet.titre} - {self.choix}"
 
 
+
+
+
+class UsersManagers(BaseUserManager):
+    def get_by_natural_key(self, matricule):
+        return self.get(matricule=matricule)
+
+    def create_user(self, matricule, password=None):
+        if not matricule:
+            return {"error": "matricule est requis"}
+
+        if self.model.objects.filter(matricule=matricule).exists():
+            return {"error": "matricule existe déjà"}
+
+        user = self.model(matricule=matricule)
+        user.set_password(password)
+        user.save(using=self._db)
+        success = " créé avec succès"
+        return {"user": user, "success": success}
+
+class Users(models.Model):
+    matricule = models.CharField(max_length=7, unique=True)
+    password = models.CharField(max_length=250, null=False, blank=False)
+    REQUIRED_FIELDS = ["password"]
+    USERNAME_FIELD = "matricule"
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    def set_password(self, raw_password):
+        self.password = hashlib.sha256(
+            raw_password.join(self.matricule).encode("utf-8")
+        ).hexdigest()
+
+    def check_password(self, raw_password):
+        return (
+            self.password
+            == hashlib.sha256(raw_password.join(self.matricule).encode("utf-8")).hexdigest()
+        )
+
+    objects = UsersManagers()
+
+    class Meta:
+        db_table = "users_table"

@@ -1,4 +1,9 @@
 from django import forms
+
+
+from django.forms.widgets import DateInput
+from django.utils.safestring import mark_safe
+
 from .models import (
     Projets,
     Organisation,
@@ -112,3 +117,41 @@ class AvancementForm(forms.ModelForm):
         widgets = {
             "choix": forms.Select(attrs={"class": "form-select"}),
         }
+
+
+
+class LoginForm(forms.Form):
+    matricule = forms.CharField(
+        label="Matricule",
+        max_length=7,
+        widget=forms.TextInput(attrs={
+            "class": "fr-input",  # Classe DSFR
+            "placeholder": "Matricule",
+        })
+    )
+    password = forms.CharField(
+        label="Mot de passe",
+        max_length=100,
+        widget=forms.PasswordInput(attrs={
+            "class": "fr-input",  # Classe DSFR
+            "placeholder": "Mot de passe",
+        })
+    )
+
+class CreateUsersForm(forms.Form):
+    matricule = forms.CharField(
+        label="Matricule",
+        max_length=7,
+        widget=forms.TextInput(attrs={
+            "class": "fr-input",  # Classe DSFR
+            "placeholder": "Insérer matricule",
+        })
+    )
+    password = forms.CharField(
+        label="Mot de passe",
+        max_length=100,
+        widget=forms.PasswordInput(attrs={
+            "class": "fr-input",  # Classe DSFR
+            "placeholder": "Insérer mot de passe",
+        })
+    )

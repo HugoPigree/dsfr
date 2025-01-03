@@ -7,8 +7,7 @@
     <title>Informations - {{ projet.titre }}</title>
     <!-- Inclusion de DSFR et Tailwind CSS -->
     <link href="{% static 'dsfr.min.css' %}" rel="stylesheet" />
-    <script defer src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
 </head>
 <body class="flex flex-col min-h-screen">
     <!-- Header -->
@@ -89,7 +88,7 @@
             <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Budget</h2>
             <div class="grid grid-cols-2 gap-4">
                 <p><strong>Hébergement :</strong> {{ budget.hebergement }}</p>
-                <p><strong>Homologation :</strong> {{ budget.homologation }}</p>
+
             </div>
         </section>
 
@@ -103,6 +102,10 @@
                 </div>
             </div>
         </section>
+            <a href="{% url 'telecharger_fiche_projet' projet.id %}" class="fr-btn">
+    Télécharger la fiche PDF
+</a>
+
 
     </main>
 

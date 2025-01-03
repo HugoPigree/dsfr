@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/create_users.css' %}"/>
+
+<h2 class='title'>Création d'utilisateur</h2>
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }} <!-- Renders the form with appropriate fields -->
+
+    <button class='fr-btn' style="position: relative; left: 40%" type="submit">Envoyez</button>
+</form>
+
+{% if created_users %}
+    <h3>Création réussie:</h3>
+    <ul>
+        {% for user in created_users %}
+            <li>{{ user.matricule }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if errors %}
+    <h3>Erreur:</h3>
+    <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock content %}
