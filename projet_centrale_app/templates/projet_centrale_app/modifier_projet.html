@@ -34,6 +34,20 @@
             color: red;
             font-size: 0.875rem;
         }
+        input[type="url"] {
+        background-color: #f8f9fa;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        padding: 0.5rem;
+        width: 100%;
+        }
+
+        input[type="url"]:focus {
+            background-color: #ffffff;
+            border-color: #000091;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 145, 0.5);
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -97,6 +111,7 @@
                         Enregistrer les modifications
                     </button>
                 </div>
+
             </form>
         </section>
     </main>

@@ -30,6 +30,8 @@ class Projets(models.Model):
     date_fin_souhaitee = models.DateField(blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True, related_name='projets')
     piece_jointe = models.FileField(upload_to='uploads/pieces_jointes/', blank=True, null=True)
+    lien = models.URLField(max_length=500, blank=True, null=True)
+    video = models.FileField(upload_to='uploads/videos/', blank=True, null=True)
 
     class Meta:
         db_table = 'projets'

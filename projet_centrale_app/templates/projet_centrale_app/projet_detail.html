@@ -24,17 +24,20 @@
             <div class="fr-card fr-card--no-arrow fr-enlarge-link flex flex-col items-center justify-center p-4" style="height: 250px;">
                 <div class="fr-card__body text-center">
                     <h3 class="fr-card__title">
-                        <a href="#">Organisation</a>
+                        <a href="{{ projet.lien }}" target="_blank">Lien vers l'app</a>
                     </h3>
                     <p class="fr-card__desc mt-2">Découvrez l'organisation derrière ce projet.</p>
                 </div>
             </div>
-
             <!-- Vidéo de présentation -->
             <div class="fr-card fr-card--no-arrow fr-enlarge-link flex flex-col items-center justify-center p-4" style="height: 250px;">
                 <div class="fr-card__body text-center">
                     <h3 class="fr-card__title">
-                        <a href="{% static 'videos/sample_video.mp4' %}" target="_blank">Vidéo de présentation</a>
+                         {% if projet.video %}
+                            <a href="{{ projet.video.url }}" download>Vidéo de présentation</a>
+                        {% else %}
+                            Vidéo non disponible
+                        {% endif %}
                     </h3>
                     <p class="fr-card__desc mt-2">Visionnez la vidéo de présentation du projet.</p>
                 </div>

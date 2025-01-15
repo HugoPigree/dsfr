@@ -31,7 +31,9 @@ class ProjetForm(forms.ModelForm):
             "date_debut",
             "date_fin_souhaitee",
             "categorie",
-            "piece_jointe",  # Assurez-vous que ce champ est dans votre modèle
+            "piece_jointe",
+            "lien",
+            "video",
         ]
         widgets = {
             "date_debut": DateInput(attrs={"class": "form-control", "placeholder": "jj/mm/aaaa"}),
