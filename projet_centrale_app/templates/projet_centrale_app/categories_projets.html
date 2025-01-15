@@ -38,14 +38,16 @@
                     <a href="{% url 'modifier_projet' projet.id %}" class="fr-btn fr-btn--secondary">
                         Modifier
                     </a>
-                    <!-- Bouton Supprimer : Visible uniquement pour les admins -->
 
+                    {% if user and user.is_admin %}
                     <form action="{% url 'supprimer_projet' projet.id %}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
                         {% csrf_token %}
                         <button type="submit" class="fr-btn fr-btn--error">
                             Supprimer
                         </button>
                     </form>
+                    {% endif %}
+
 
                 </div>
             </div>
@@ -55,6 +57,7 @@
             </p>
             {% endfor %}
         </div>
+
     </main>
 
     <!-- Footer -->

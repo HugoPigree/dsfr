@@ -45,10 +45,15 @@ def index(request):
 def categorie_detail(request, categorie_slug):
     categorie = get_object_or_404(Categorie, slug=categorie_slug)
     projets = Projets.objects.filter(categorie=categorie)
+    user_id = request.session.get('user_id')
+    user = None
+    if user_id:
+        user = Users.objects.get(id=user_id)
+
     return render(
         request,
         "projet_centrale_app/categories_projets.html",
-        {"categorie": categorie, "projets": projets},
+        {"categorie": categorie, "projets": projets, "user": user,},
     )
 
 # Vue pour les détails d'un projet
