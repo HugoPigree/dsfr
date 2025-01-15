@@ -135,7 +135,7 @@ class Users(models.Model):
     USERNAME_FIELD = "matricule"
 
     class Meta:
-        db_table = "users_table"  # Nom de la table dans la base de données
+        db_table = "users_table"
         verbose_name = "Utilisateur"
         verbose_name_plural = "Utilisateurs"
 

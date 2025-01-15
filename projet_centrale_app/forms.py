@@ -16,7 +16,7 @@ from .models import (
     Categorie,
 )
 
-# Widget personnalisé pour les champs de type date
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 

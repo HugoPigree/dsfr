@@ -238,7 +238,7 @@ def modifier_projet(request, projet_id):
             budget_form.save()
             avancement_projet_form.save()
 
-            # Redirection vers les détails du projet après modification
+
             return redirect('projet_detail', projet_id=projet.id)
     else:
         # Préremplir les formulaires avec les instances existantes

@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.login_view, name='login'),  # Page de connexion par défaut
+    path('', views.login_view, name='login'),
     path('accueil/', views.index, name='index'),  # Page d'accueil (accessible après connexion)
     path('ajouter-projet/', views.ajouter_projet, name='ajouter_projet'),  # Ajouter un projet
     path('projet/<int:projet_id>/', views.projet_detail, name='projet_detail'),  # Détails d'un projet
