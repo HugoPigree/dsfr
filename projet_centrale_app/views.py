@@ -324,7 +324,7 @@ def login_view(request):
             if user.password == password:
                 # Si le mot de passe correspond, l'utilisateur est authentifié
                 request.session['user_id'] = user.id
-                return redirect('index')  # Redirige vers la page d'accueil ou une autre page
+                return redirect('index')
             else:
                 # Si le mot de passe ne correspond pas
                 messages.error(request, "Matricule ou mot de passe incorrect.")
