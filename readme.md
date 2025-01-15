@@ -1,25 +1,29 @@
-## 🚀 Fonctionnalités principales
+# DSFR Project
 
-- **Navigation par catégories** : Accédez facilement aux projets selon leur catégorie.
-- **Ajout de projets** : Ajoutez de nouveaux projets directement depuis l'interface utilisateur.
-- **Informations détaillées** : Consultez les détails de chaque projet.
+Ce projet est basé sur Django et utilise DSFR pour le design. Il permet la gestion des projets dans un environnement professionnel.
 
----
+## Fonctionnalités
 
-## 🛠️ Installation et configuration
+- Gestion des projets (ajout, modification, suppression).
+- Authentification avec rôles (admin/utilisateur).
+- Téléchargement de vidéos et pièces jointes.
 
-Suivez ces étapes pour installer et lancer le projet sur votre machine locale.
+## Prérequis
 
-### 1. Prérequis
+- Python 3.x
+- Django 4.x
+- Node.js (pour Tailwind CSS)
+- Un environnement virtuel (recommandé)
 
-Avant de commencer, assurez-vous d'avoir installé sur votre PC :
+## Installation
 
-- **Python** (version 3.8 ou supérieure)
+1. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/HugoPigree/dsfr.git
+   cd dsfr
 
-### initialiser la bdd : 
-``python manage.py makemigrations
-python manage.py migrate
-``
-### Lancez le serveur local pour tester l'application :
-
-``python manage.py runserver``
+   pip install -r requirements.txt
+   
+2. Lancez le serveur :
+   ```bash
+   python manage.py runserver
