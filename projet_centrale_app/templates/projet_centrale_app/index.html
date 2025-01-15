@@ -10,7 +10,7 @@
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen ">
     <!-- Header -->
     {% include 'projet_centrale_app/partials/header.html' %}
 
@@ -51,6 +51,9 @@
     </main>
 
     <!-- Footer -->
-    {% include 'projet_centrale_app/partials/footer.html' %}
+
+    <footer class="mt-auto">
+        {% include 'projet_centrale_app/partials/footer.html' %}
+    </footer>
 </body>
 </html>
