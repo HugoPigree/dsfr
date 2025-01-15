@@ -1,0 +1,20 @@
+{
+  "name": "dsfr12",
+  "version": "1.0.0",
+  "description": "- **Navigation par catégories** : Accédez facilement aux projets selon leur catégorie.\r - **Ajout de projets** : Ajoutez de nouveaux projets directement depuis l'interface utilisateur.\r - **Informations détaillées** : Consultez les détails de chaque projet.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss -i ./projet_centrale_app/static/tailwind.css -o ./projet_centrale_app/static/output.css --watch"
+
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  }
+}
