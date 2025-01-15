@@ -8,6 +8,7 @@
     <!-- Inclusion de DSFR et Tailwind CSS -->
     <link href="{% static 'dsfr.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col min-h-screen">
     <!-- Header -->
@@ -37,13 +38,15 @@
                     <a href="{% url 'modifier_projet' projet.id %}" class="fr-btn fr-btn--secondary">
                         Modifier
                     </a>
-                    <!-- Bouton Supprimer -->
+                    <!-- Bouton Supprimer : Visible uniquement pour les admins -->
+
                     <form action="{% url 'supprimer_projet' projet.id %}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
                         {% csrf_token %}
                         <button type="submit" class="fr-btn fr-btn--error">
                             Supprimer
                         </button>
                     </form>
+
                 </div>
             </div>
             {% empty %}

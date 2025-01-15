@@ -2,6 +2,7 @@
     <div class="fr-header__body">
         <div class="fr-container">
             <div class="fr-header__body-row">
+                <!-- Logo et Intitulé Officiel -->
                 <div class="fr-header__brand fr-enlarge-link">
                     <div class="fr-header__brand-top">
                         <div class="fr-header__logo">
@@ -12,12 +13,36 @@
                         </div>
                     </div>
                     <div class="fr-header__service">
-                        <a href="/" title="Accueil - [À MODIFIER - Nom du site / service] - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)">
+                        <a href="/accueil/" title="Accueil - Nom du site / service">
                             <p class="fr-header__service-title">
                                 Nom du site / service
                             </p>
                         </a>
-                        <p class="fr-header__service-tagline">baseline - précisions sur l‘organisation</p>
+                        <p class="fr-header__service-tagline">
+                            baseline - précisions sur l'organisation
+                        </p>
+                    </div>
+                </div>
+                <!-- Navigation -->
+                <div class="fr-header__tools">
+                    <div class="fr-header__tools-links">
+                        <ul class="fr-btns-group">
+                            {% if request.session.user_id %}
+                                <!-- Affichage pour utilisateur connecté -->
+                                <li>
+                                    <a href="{% url 'logout' %}" class="fr-btn fr-icon-lock-line" title="Déconnexion">
+                                        Déconnexion
+                                    </a>
+                                </li>
+                            {% else %}
+                                <!-- Affichage pour utilisateur non connecté -->
+                                <li>
+                                    <a href="{% url 'login' %}" class="fr-btn fr-icon-account-line" title="Connexion">
+                                        Se connecter
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
                     </div>
                 </div>
             </div>

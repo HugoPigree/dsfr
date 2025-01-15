@@ -29,6 +29,7 @@ class Projets(models.Model):
     date_debut = models.DateField(blank=True, null=True)
     date_fin_souhaitee = models.DateField(blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True, related_name='projets')
+    piece_jointe = models.FileField(upload_to='uploads/pieces_jointes/', blank=True, null=True)
 
     class Meta:
         db_table = 'projets'
@@ -119,52 +120,37 @@ class AvancementProjet(models.Model):
         return f"{self.projet.titre} - {self.choix}"
 
 
-
-
-
-class UsersManagers(BaseUserManager):
-    def get_by_natural_key(self, matricule):
-        return self.get(matricule=matricule)
-
-    def create_user(self, matricule, password=None):
-        if not matricule:
-            return {"error": "matricule est requis"}
-
-        if self.model.objects.filter(matricule=matricule).exists():
-            return {"error": "matricule existe déjà"}
-
-        user = self.model(matricule=matricule)
-        user.set_password(password)
-        user.save(using=self._db)
-        success = " créé avec succès"
-        return {"user": user, "success": success}
-
 class Users(models.Model):
     matricule = models.CharField(max_length=7, unique=True)
-    password = models.CharField(max_length=250, null=False, blank=False)
-    REQUIRED_FIELDS = ["password"]
+    password = models.CharField(max_length=250, null=False, blank=False)  # Mot de passe en texte clair
+    email = models.EmailField(unique=True, blank=True, null=True)
+    nom = models.CharField(max_length=100, blank=True, null=True)
+    prenom = models.CharField(max_length=100, blank=True, null=True)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    is_admin = models.BooleanField(default=False)# Date de création de l'utilisateur
+
+    REQUIRED_FIELDS = ["password", "email"]
     USERNAME_FIELD = "matricule"
 
-    @property
-    def is_anonymous(self):
-        return False
+    class Meta:
+        db_table = "users_table"  # Nom de la table dans la base de données
+        verbose_name = "Utilisateur"
+        verbose_name_plural = "Utilisateurs"
 
-    @property
-    def is_authenticated(self):
-        return True
+    def __str__(self):
+        return self.matricule
 
-    def set_password(self, raw_password):
-        self.password = hashlib.sha256(
-            raw_password.join(self.matricule).encode("utf-8")
-        ).hexdigest()
 
-    def check_password(self, raw_password):
-        return (
-            self.password
-            == hashlib.sha256(raw_password.join(self.matricule).encode("utf-8")).hexdigest()
-        )
-
-    objects = UsersManagers()
+class UserSessions(models.Model):
+    user = models.ForeignKey("Users", on_delete=models.CASCADE, related_name="sessions")
+    session_key = models.CharField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)  # Date de début de session
+    expired_at = models.DateTimeField(blank=True, null=True)  # Date d'expiration de la session
 
     class Meta:
-        db_table = "users_table"
+        db_table = "user_sessions"
+        verbose_name = "Session utilisateur"
+        verbose_name_plural = "Sessions utilisateurs"
+
+    def __str__(self):
+        return f"Session de {self.user.matricule} - {self.session_key}"

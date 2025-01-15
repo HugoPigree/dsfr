@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <!-- Inclusion de DSFR et Tailwind CSS -->
+    <link href="{% static 'dsfr.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50">
+    <!-- Header -->
+    {% include 'projet_centrale_app/partials/header.html' %}
+
+    <!-- Main Content -->
+    <h1 class="text-center mt-20 text-3xl font-bold mb-6">Page Login</h1>
+    <main class="">
+
+        <div class="fr-container p-6 w-full mt-20 mb-20"> <!-- Suppression de la classe `fr-card` -->
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+
+                <!-- Affichage des messages d'erreur -->
+                {% if messages %}
+                    <ul class="fr-alert fr-alert--error fr-mb-3w">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <div>
+                    <!-- Champ matricule -->
+                    <div>
+                        <label for="matricule" class="fr-label">Matricule</label>
+                        <input
+                            type="text"
+                            id="matricule"
+                            name="matricule"
+                            class="fr-input mt-2 block w-full"
+                            placeholder="Entrez votre matricule"
+                            required
+                        >
+                    </div>
+
+                    <!-- Champ mot de passe -->
+                    <div class="mt-10">
+                        <label for="password" class="fr-label">Mot de passe</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="fr-input mt-2 block w-full"
+                            placeholder="Entrez votre mot de passe"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Bouton de connexion -->
+                <div class="mt-10">
+                    <button
+                        type="submit"
+                        class="fr-btn w-full fr-btn--primary">
+                        Se connecter
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    {% include 'projet_centrale_app/partials/footer.html' %}
+</body>
+</html>

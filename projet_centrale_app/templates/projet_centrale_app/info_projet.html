@@ -8,6 +8,7 @@
     <!-- Inclusion de DSFR et Tailwind CSS -->
     <link href="{% static 'dsfr.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col min-h-screen">
     <!-- Header -->
@@ -102,6 +103,17 @@
                 </div>
             </div>
         </section>
+        <div>
+    <p>Pièce jointe :</p>
+    {% if projet.piece_jointe %}
+        <a href="{{ projet.piece_jointe.url }}" class="fr-btn fr-btn--secondary" download>
+            Télécharger la pièce jointe
+        </a>
+    {% else %}
+        <p>Aucune pièce jointe disponible.</p>
+    {% endif %}
+</div>
+
             <a href="{% url 'telecharger_fiche_projet' projet.id %}" class="fr-btn">
     Télécharger la fiche PDF
 </a>

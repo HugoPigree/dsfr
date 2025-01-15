@@ -31,11 +31,17 @@ class ProjetForm(forms.ModelForm):
             "date_debut",
             "date_fin_souhaitee",
             "categorie",
+            "piece_jointe",  # Assurez-vous que ce champ est dans votre modèle
         ]
         widgets = {
             "date_debut": DateInput(attrs={"class": "form-control", "placeholder": "jj/mm/aaaa"}),
             "date_fin_souhaitee": DateInput(attrs={"class": "form-control", "placeholder": "jj/mm/aaaa"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ajout des classes ou styles nécessaires pour les champs
+        self.fields["piece_jointe"].widget.attrs.update({"class": "fr-input"})
 
 # Formulaire pour le modèle Organisation
 class OrganisationForm(forms.ModelForm):
@@ -118,40 +124,13 @@ class AvancementForm(forms.ModelForm):
             "choix": forms.Select(attrs={"class": "form-select"}),
         }
 
-
-
 class LoginForm(forms.Form):
     matricule = forms.CharField(
-        label="Matricule",
         max_length=7,
-        widget=forms.TextInput(attrs={
-            "class": "fr-input",  # Classe DSFR
-            "placeholder": "Matricule",
-        })
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Matricule"}),
+        label="Matricule"
     )
     password = forms.CharField(
-        label="Mot de passe",
-        max_length=100,
-        widget=forms.PasswordInput(attrs={
-            "class": "fr-input",  # Classe DSFR
-            "placeholder": "Mot de passe",
-        })
-    )
-
-class CreateUsersForm(forms.Form):
-    matricule = forms.CharField(
-        label="Matricule",
-        max_length=7,
-        widget=forms.TextInput(attrs={
-            "class": "fr-input",  # Classe DSFR
-            "placeholder": "Insérer matricule",
-        })
-    )
-    password = forms.CharField(
-        label="Mot de passe",
-        max_length=100,
-        widget=forms.PasswordInput(attrs={
-            "class": "fr-input",  # Classe DSFR
-            "placeholder": "Insérer mot de passe",
-        })
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Mot de passe"}),
+        label="Mot de passe"
     )

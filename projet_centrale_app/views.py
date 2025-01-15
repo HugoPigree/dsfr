@@ -5,6 +5,11 @@ from django.template.loader import render_to_string
 from django.contrib.staticfiles import finders
 from xhtml2pdf import pisa
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth import logout
+from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 
 from .models import (
     Projets,
@@ -15,6 +20,8 @@ from .models import (
     Budget,
     AvancementProjet,
     Categorie,
+    Users,
+    UserSessions,
 )
 from .forms import (
     ProjetForm,
@@ -24,6 +31,7 @@ from .forms import (
     CaracteristiquesForm,
     BudgetForm,
     AvancementForm,
+    LoginForm
 )
 from django.urls import reverse
 from django.contrib import messages
@@ -88,6 +96,13 @@ def info_projet(request, projet_id):
 
 # Vue pour ajouter un projet
 def ajouter_projet(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    user = Users.objects.get(id=user_id)
+    if not user.is_admin:
+        return HttpResponseForbidden("Vous n'avez pas les droits pour accéder à cette page.")
     if request.method == "POST":
         projet_form = ProjetForm(request.POST)
         organisation_form = OrganisationForm(request.POST)
@@ -164,6 +179,15 @@ def ajouter_projet(request):
         },
     )
 def modifier_projet(request, projet_id):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    user = Users.objects.get(id=user_id)
+    if not user.is_admin:
+        return HttpResponseForbidden("Vous n'avez pas les droits pour accéder à cette page.")
+
+    # Récupération des objets liés au projet
     projet = get_object_or_404(Projets, id=projet_id)
     organisation = Organisation.objects.filter(projet=projet).first()
     planning = PlanningPrevisionnel.objects.filter(projet=projet).first()
@@ -173,7 +197,8 @@ def modifier_projet(request, projet_id):
     avancement_projet = AvancementProjet.objects.filter(projet=projet).first()
 
     if request.method == "POST":
-        projet_form = ProjetForm(request.POST, instance=projet)
+        # Création des formulaires avec les données POST et les fichiers téléchargés
+        projet_form = ProjetForm(request.POST, request.FILES, instance=projet)
         organisation_form = OrganisationForm(request.POST, instance=organisation)
         planning_form = PlanningForm(request.POST, instance=planning)
         maturite_form = MaturiteForm(request.POST, instance=maturite)
@@ -181,6 +206,7 @@ def modifier_projet(request, projet_id):
         budget_form = BudgetForm(request.POST, instance=budget)
         avancement_projet_form = AvancementForm(request.POST, instance=avancement_projet)
 
+        # Validation des formulaires
         if (
             projet_form.is_valid()
             and organisation_form.is_valid()
@@ -190,6 +216,15 @@ def modifier_projet(request, projet_id):
             and budget_form.is_valid()
             and avancement_projet_form.is_valid()
         ):
+            # Associer explicitement le projet avant d'enregistrer
+            organisation_form.instance.projet = projet
+            planning_form.instance.projet = projet
+            maturite_form.instance.projet = projet
+            caracteristiques_form.instance.projet = projet
+            budget_form.instance.projet = projet
+            avancement_projet_form.instance.projet = projet
+
+            # Sauvegarde des formulaires
             projet_form.save()
             organisation_form.save()
             planning_form.save()
@@ -197,8 +232,11 @@ def modifier_projet(request, projet_id):
             caracteristiques_form.save()
             budget_form.save()
             avancement_projet_form.save()
+
+            # Redirection vers les détails du projet après modification
             return redirect('projet_detail', projet_id=projet.id)
     else:
+        # Préremplir les formulaires avec les instances existantes
         projet_form = ProjetForm(instance=projet)
         organisation_form = OrganisationForm(instance=organisation)
         planning_form = PlanningForm(instance=planning)
@@ -268,64 +306,30 @@ def telecharger_fiche_projet(request, projet_id):
 
 
 
-@login_required
-def create_user_view(request):
-    created_users = []
-    errors = []
-
+def login_view(request):
     if request.method == "POST":
-        form = CreateUsersForm(request.POST)
-        if form.is_valid():
-            matricule = form.cleaned_data["matricule"]
-            password = form.cleaned_data["password"]
+        matricule = request.POST.get("matricule")
+        password = request.POST.get("password")
 
-            # Check if the matricule already exists
-            if not users.objects.filter(matricule=matricule).exists():
-                # Create the new user
-                user = users.objects.create_user(matricule=matricule, password=password)
-                created_users.append(user)
+        try:
+            # Récupérer l'utilisateur correspondant au matricule
+            user = Users.objects.get(matricule=matricule)
+
+            # Vérification du mot de passe
+            if user.password == password:
+                # Si le mot de passe correspond, l'utilisateur est authentifié
+                request.session['user_id'] = user.id
+                return redirect('index')  # Redirige vers la page d'accueil ou une autre page
             else:
-                errors.append(f"Matricule {matricule} already exists.")
-        else:
-            errors.append("Form data is not valid.")
+                # Si le mot de passe ne correspond pas
+                messages.error(request, "Matricule ou mot de passe incorrect.")
+                return redirect('login')
+        except Users.DoesNotExist:
+            messages.error(request, "Matricule incorrect.")
 
-    else:
-        form = CreateUsersForm()
+    return render(request, "projet_centrale_app/login.html")
 
-    context = {
-        "form": form,
-        "created_users": created_users,
-        "errors": errors,
-    }
-    return render(request, "create_users.html", context)
-
-@login_required
 def logout_view(request):
     logout(request)
-    return redirect("/login")
-
-
-def login_view(request):
-    # set admin password to admin
-    if not users.objects.filter(matricule="admin").exists():
-        users.objects.create_user(
-            "admin",
-            "admin",
-        )
-    if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            matricule = cleaned_data.get("matricule")
-            password = cleaned_data.get("password")
-            user = authenticate(request, matricule=matricule, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("/formulaires")
-            else:
-                return render(
-                    request,
-                    "login_form.html",
-                    {"form": form, "error": "Invalid credentials"},
-                )
-    return render(request, "login_form.html", {"form": LoginForm()})
+    messages.success(request, "Vous êtes déconnecté.")
+    return redirect("login")
