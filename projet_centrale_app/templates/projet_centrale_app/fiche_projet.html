@@ -4,91 +4,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiche Projet</title>
-    <!-- Inclusion de DSFR et Tai
-    <link href="{% static 'dsfr.min.css' %}" rel="styleslwind CSS -->
+    <title>Informations - {{ projet.titre }}</title>
+    <!-- Inclusion de DSFR et Tailwind CSS -->
+    <link href="{% static 'dsfr.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-size: 1.4rem; /* Zoom général */
+            line-height: 1.8;
+        }
+        h1 {
+            font-size: 2.5rem;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        p {
+            margin-bottom: 0.8rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+    </style>
 </head>
-<body class="flex flex-col min-h-screen bg-gray-50">
-    <!-- Header -->
+<body class="flex flex-col min-h-screen">
+    <!-- Main content -->
+    <main class="fr-container my-8">
+        <!-- Titre principal -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-gray-800">{{ projet.titre }}</h1>
+        </div>
 
-    <!-- Main Content -->
-    <main class="fr-container mt-12">
-        <h1 class="fr-h1 text-center mb-8">{{ projet.titre }}</h1>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            <!-- Détails du projet -->
-            <div>
-                <h2 class="fr-h2">Détails du projet</h2>
-                <p><strong>Description :</strong> {{ projet.description }}</p>
-                <p><strong>Date de début :</strong> {{ projet.date_debut }}</p>
-                <p><strong>Date souhaitée de fin :</strong> {{ projet.date_fin_souhaitee }}</p>
+        <!-- Détails du projet -->
+        <section>
+            <h2>Détails du projet</h2>
+            <div class="grid">
                 <p><strong>Priorité :</strong> {{ projet.priorite }}</p>
+                <p><strong>Date de début :</strong> {{ projet.date_debut }}</p>
+                <p><strong>Date de fin souhaitée :</strong> {{ projet.date_fin_souhaitee }}</p>
                 <p><strong>Catégorie :</strong> {{ projet.categorie.nom }}</p>
+                <p><strong>Description :</strong> {{ projet.description }}</p>
             </div>
+        </section>
 
-            <!-- Organisation -->
-            <div>
-                <h2 class="fr-h2">Organisation</h2>
+        <!-- Organisation -->
+        <section>
+            <h2>Organisation</h2>
+            <div class="grid">
+                <p><strong>SD :</strong> {{ organisation.sd }}</p>
                 <p><strong>MOA :</strong> {{ organisation.moa }}</p>
                 <p><strong>MOE :</strong> {{ organisation.moe }}</p>
                 <p><strong>Prestataire :</strong> {{ organisation.prestataire }}</p>
             </div>
-        </div>
+        </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            <!-- Planning prévisionnel -->
-            <div>
-                <h2 class="fr-h2">Planning prévisionnel</h2>
+        <!-- Planning prévisionnel -->
+        <section>
+            <h2>Planning prévisionnel</h2>
+            <div class="grid">
                 <p><strong>Durée prévue :</strong> {{ planning.duree_prevue }}</p>
-                <p><strong>Nombre ETP estimé :</strong> {{ planning.nombre_etp_estime }}</p>
+                <p><strong>Nombre d'ETP estimé :</strong> {{ planning.nombre_etp_estime }}</p>
             </div>
+        </section>
 
-            <!-- Caractéristiques techniques -->
-            <div>
-                <h2 class="fr-h2">Caractéristiques techniques</h2>
+        <!-- Maturité du projet -->
+        <section>
+            <h2>Maturité du projet</h2>
+            <div class="grid">
+                <p><strong>Plan de charge :</strong> {{ maturite.plan_de_charge }}</p>
+                <p><strong>FEB :</strong> {{ maturite.feb }}</p>
+                <p><strong>Note de cadrage :</strong> {{ maturite.note_de_cadrage }}</p>
+                <p><strong>Cahier des charges :</strong> {{ maturite.cahier_des_charges }}</p>
+                <p><strong>Fonctionne :</strong> {{ maturite.fonctionne }}</p>
+                <p><strong>DAT :</strong> {{ maturite.dat }}</p>
+                <p><strong>Documentation utilisateurs :</strong> {{ maturite.documentation_utilisateurs }}</p>
+                <p><strong>Demande SSO :</strong> {{ maturite.demande_sso }}</p>
+                <p><strong>Demande d'hébergement :</strong> {{ maturite.demande_hebergement }}</p>
+                <p><strong>Fiche registre :</strong> {{ maturite.fiche_registre }}</p>
+                <p><strong>Note d'orientation SSI :</strong> {{ maturite.note_orientation_ssi }}</p>
+                <p><strong>Analyse de risque :</strong> {{ maturite.analyse_de_risque }}</p>
+                <p><strong>Homologation :</strong> {{ maturite.homologation }}</p>
+            </div>
+        </section>
+
+        <!-- Caractéristiques techniques -->
+        <section>
+            <h2>Caractéristiques techniques</h2>
+            <div class="grid">
                 <p><strong>OS Serveur :</strong> {{ caracteristiques.os_serveur }}</p>
-                <p><strong>Technos utilisées :</strong> {{ caracteristiques.techno_utilisees }}</p>
                 <p><strong>Type d'hébergement :</strong> {{ caracteristiques.type_hebergement }}</p>
+                <p><strong>Technologies utilisées :</strong> {{ caracteristiques.techno_utilisees }}</p>
+                <p><strong>Authentification :</strong> {{ caracteristiques.authentification }}</p>
             </div>
-        </div>
+        </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            <!-- Budget -->
-            <div>
-                <h2 class="fr-h2">Budget</h2>
+        <!-- Budget -->
+        <section>
+            <h2>Budget</h2>
+            <div class="grid">
                 <p><strong>Hébergement :</strong> {{ budget.hebergement }}</p>
                 <p><strong>Homologation :</strong> {{ budget.homologation }}</p>
             </div>
+        </section>
 
-            <!-- Avancement -->
-            <div>
-                <h2 class="fr-h2">Avancement</h2>
-                <p><strong>État actuel :</strong> {{ avancement.choix }}</p>
+        <!-- Avancements -->
+        <section>
+            <h2>Avancements</h2>
+            <div class="grid">
+                <p><strong>Avancée du projet :</strong> {{ avancement_projet.choix }}</p>
             </div>
-        </div>
-
-        <!-- Maturité du projet -->
-        <div class="mb-16">
-            <h2 class="fr-h2">Maturité du projet</h2>
-            <p><strong>Plan de charge :</strong> {{ maturite.plan_de_charge }}</p>
-            <p><strong>FEB :</strong> {{ maturite.feb }}</p>
-            <p><strong>Note de cadrage :</strong> {{ maturite.note_de_cadrage }}</p>
-            <p><strong>Cahier des charges :</strong> {{ maturite.cahier_des_charges }}</p>
-            <p><strong>Fonctionne :</strong> {{ maturite.fonctionne }}</p>
-            <p><strong>DAT :</strong> {{ maturite.dat }}</p>
-            <p><strong>Documentation utilisateurs :</strong> {{ maturite.documentation_utilisateurs }}</p>
-            <p><strong>Demande SSO :</strong> {{ maturite.demande_sso }}</p>
-            <p><strong>Demande d'hébergement :</strong> {{ maturite.demande_hebergement }}</p>
-            <p><strong>Fiche registre :</strong> {{ maturite.fiche_registre }}</p>
-            <p><strong>Note d'orientation SSI :</strong> {{ maturite.note_orientation_ssi }}</p>
-            <p><strong>Analyse de risque :</strong> {{ maturite.analyse_de_risque }}</p>
-            <p><strong>Homologation :</strong> {{ maturite.homologation }}</p>
-        </div>
+        </section>
     </main>
-
-    <!-- Footer -->
-
 </body>
 </html>
