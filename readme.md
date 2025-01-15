@@ -23,7 +23,12 @@ Ce projet est basé sur Django et utilise DSFR pour le design. Il permet la gest
    cd dsfr
 
    pip install -r requirements.txt
+
+2. Initialiser la BDD :
+   ```bash
+   python manage.py migrate
    
-2. Lancez le serveur :
+3. Lancez le serveur :
    ```bash
    python manage.py runserver
+
