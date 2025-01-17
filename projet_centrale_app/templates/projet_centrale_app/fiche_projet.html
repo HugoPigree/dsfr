@@ -81,21 +81,22 @@
         <section>
             <h2>Maturité du projet</h2>
             <div class="grid">
-                <p><strong>Plan de charge :</strong> {{ maturite.plan_de_charge }}</p>
-                <p><strong>FEB :</strong> {{ maturite.feb }}</p>
-                <p><strong>Note de cadrage :</strong> {{ maturite.note_de_cadrage }}</p>
-                <p><strong>Cahier des charges :</strong> {{ maturite.cahier_des_charges }}</p>
-                <p><strong>Fonctionne :</strong> {{ maturite.fonctionne }}</p>
-                <p><strong>DAT :</strong> {{ maturite.dat }}</p>
-                <p><strong>Documentation utilisateurs :</strong> {{ maturite.documentation_utilisateurs }}</p>
-                <p><strong>Demande SSO :</strong> {{ maturite.demande_sso }}</p>
-                <p><strong>Demande d'hébergement :</strong> {{ maturite.demande_hebergement }}</p>
-                <p><strong>Fiche registre :</strong> {{ maturite.fiche_registre }}</p>
-                <p><strong>Note d'orientation SSI :</strong> {{ maturite.note_orientation_ssi }}</p>
-                <p><strong>Analyse de risque :</strong> {{ maturite.analyse_de_risque }}</p>
-                <p><strong>Homologation :</strong> {{ maturite.homologation }}</p>
+                <p><strong> Plan de charge :</strong> {{ maturite.plan_de_charge_commentaire }}</p>
+                <p><strong> FEB :</strong> {{ maturite.feb_commentaire }}</p>
+                <p><strong> Note de cadrage :</strong> {{ maturite.note_de_cadrage_commentaire }}</p>
+                <p><strong>Cahier des charges :</strong> {{ maturite.cahier_des_charges_commentaire }}</p>
+                <p><strong>Fonctionne :</strong> {{ maturite.fonctionne_commentaire }}</p>
+                <p><strong> DAT :</strong> {{ maturite.dat_commentaire }}</p>
+                <p><strong>Documentation utilisateurs :</strong> {{ maturite.documentation_utilisateurs_commentaire }}</p>
+                <p><strong> Demande SSO :</strong> {{ maturite.demande_sso_commentaire }}</p>
+                <p><strong>Demande d'hébergement :</strong> {{ maturite.demande_hebergement_commentaire }}</p>
+                <p><strong> Fiche registre :</strong> {{ maturite.fiche_registre_commentaire }}</p>
+                <p><strong> Note d'orientation SSI :</strong> {{ maturite.note_orientation_ssi_commentaire }}</p>
+                <p><strong> Analyse de risque :</strong> {{ maturite.analyse_de_risque_commentaire }}</p>
+                <p><strong> Homologation :</strong> {{ maturite.homologation_commentaire }}</p>
             </div>
         </section>
+
 
         <!-- Caractéristiques techniques -->
         <section>
@@ -112,8 +113,8 @@
         <section>
             <h2>Budget</h2>
             <div class="grid">
-                <p><strong>Hébergement :</strong> {{ budget.hebergement }}</p>
-                <p><strong>Homologation :</strong> {{ budget.homologation }}</p>
+                <p><strong>Hébergement :</strong> {{ budget.hebergement_commentaire }}</p>
+                <p><strong>Homologation :</strong> {{ budget.homologation_budget_commentaire }}</p>
             </div>
         </section>
 

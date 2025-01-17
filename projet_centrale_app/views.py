@@ -206,9 +206,9 @@ def modifier_projet(request, projet_id):
         projet_form = ProjetForm(request.POST, request.FILES, instance=projet)
         organisation_form = OrganisationForm(request.POST, instance=organisation)
         planning_form = PlanningForm(request.POST, instance=planning)
-        maturite_form = MaturiteForm(request.POST, instance=maturite)
+        maturite_form = MaturiteForm(request.POST, request.FILES, instance=maturite)
         caracteristiques_form = CaracteristiquesForm(request.POST, instance=caracteristiques)
-        budget_form = BudgetForm(request.POST, instance=budget)
+        budget_form = BudgetForm(request.POST, request.FILES, instance=budget)
         avancement_projet_form = AvancementForm(request.POST, instance=avancement_projet)
 
         # Validation des formulaires
@@ -237,7 +237,6 @@ def modifier_projet(request, projet_id):
             caracteristiques_form.save()
             budget_form.save()
             avancement_projet_form.save()
-
 
             return redirect('projet_detail', projet_id=projet.id)
     else:

@@ -31,7 +31,6 @@ class ProjetForm(forms.ModelForm):
             "date_debut",
             "date_fin_souhaitee",
             "categorie",
-            "piece_jointe",
             "lien",
             "video",
         ]
@@ -40,10 +39,7 @@ class ProjetForm(forms.ModelForm):
             "date_fin_souhaitee": DateInput(attrs={"class": "form-control", "placeholder": "jj/mm/aaaa"}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Ajout des classes ou styles nécessaires pour les champs
-        self.fields["piece_jointe"].widget.attrs.update({"class": "fr-input"})
+
 
 # Formulaire pour le modèle Organisation
 class OrganisationForm(forms.ModelForm):
@@ -73,22 +69,62 @@ class MaturiteForm(forms.ModelForm):
         model = MaturiteProjet
         fields = [
             "plan_de_charge",
+            "plan_de_charge_commentaire",
             "feb",
+            "feb_commentaire",
             "note_de_cadrage",
+            "note_de_cadrage_commentaire",
             "cahier_des_charges",
+            "cahier_des_charges_commentaire",
             "fonctionne",
+            "fonctionne_commentaire",
             "dat",
+            "dat_commentaire",
             "documentation_utilisateurs",
+            "documentation_utilisateurs_commentaire",
             "demande_sso",
+            "demande_sso_commentaire",
             "demande_hebergement",
+            "demande_hebergement_commentaire",
             "fiche_registre",
+            "fiche_registre_commentaire",
             "note_orientation_ssi",
+            "note_orientation_ssi_commentaire",
             "analyse_de_risque",
+            "analyse_de_risque_commentaire",
             "homologation",
+            "homologation_commentaire",
         ]
         widgets = {
-            field: forms.Textarea(attrs={"class": "form-control", "rows": 2}) for field in fields
+            "plan_de_charge": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "feb": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "note_de_cadrage": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "cahier_des_charges": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "fonctionne": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "dat": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "documentation_utilisateurs": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "demande_sso": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "demande_hebergement": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "fiche_registre": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "note_orientation_ssi": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "analyse_de_risque": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "homologation": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "plan_de_charge_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "feb_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "note_de_cadrage_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "cahier_des_charges_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "fonctionne_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "dat_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "documentation_utilisateurs_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "demande_sso_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "demande_hebergement_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "fiche_registre_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "note_orientation_ssi_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "analyse_de_risque_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "homologation_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
         }
+
+
 
 # Formulaire pour le modèle CaracteristiquesTechniques
 class CaracteristiquesForm(forms.ModelForm):
@@ -111,11 +147,19 @@ class CaracteristiquesForm(forms.ModelForm):
 class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
-        fields = ["hebergement", "homologation"]
+        fields = [
+            "hebergement",
+            "hebergement_commentaire",
+            "homologation",
+            "homologation_budget_commentaire",
+        ]
         widgets = {
-            "hebergement": forms.Textarea(attrs={"class": "form-control", "rows": 2}),  # Zone de texte
-            "homologation": forms.Textarea(attrs={"class": "form-control", "rows": 2}),  # Zone de texte
+            "hebergement": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "homologation": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "hebergement_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "homologation_budget_commentaire": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
         }
+
 
 # Formulaire pour le modèle AvancementProjet
 class AvancementForm(forms.ModelForm):

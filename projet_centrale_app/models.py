@@ -29,7 +29,6 @@ class Projets(models.Model):
     date_debut = models.DateField(blank=True, null=True)
     date_fin_souhaitee = models.DateField(blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True, related_name='projets')
-    piece_jointe = models.FileField(upload_to='uploads/pieces_jointes/', blank=True, null=True)
     lien = models.URLField(max_length=500, blank=True, null=True)
     video = models.FileField(upload_to='uploads/videos/', blank=True, null=True)
 
@@ -62,22 +61,49 @@ class PlanningPrevisionnel(models.Model):
 
 class MaturiteProjet(models.Model):
     projet = models.ForeignKey(Projets, on_delete=models.CASCADE)
-    plan_de_charge = models.TextField(blank=True, null=True)
-    feb = models.TextField(blank=True, null=True)
-    note_de_cadrage = models.TextField(blank=True, null=True)
-    cahier_des_charges = models.TextField(blank=True, null=True)
-    fonctionne = models.TextField(blank=True, null=True)
-    dat = models.TextField(blank=True, null=True)
-    documentation_utilisateurs = models.TextField(blank=True, null=True)
-    demande_sso = models.TextField(blank=True, null=True)
-    demande_hebergement = models.TextField(blank=True, null=True)
-    fiche_registre = models.TextField(blank=True, null=True)
-    note_orientation_ssi = models.TextField(blank=True, null=True)
-    analyse_de_risque = models.TextField(blank=True, null=True)
-    homologation = models.TextField(blank=True, null=True)
+
+    plan_de_charge = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    plan_de_charge_commentaire = models.TextField(blank=True, null=True)
+
+    feb = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    feb_commentaire = models.TextField(blank=True, null=True)
+
+    note_de_cadrage = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    note_de_cadrage_commentaire = models.TextField(blank=True, null=True)
+
+    cahier_des_charges = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    cahier_des_charges_commentaire = models.TextField(blank=True, null=True)
+
+    fonctionne = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    fonctionne_commentaire = models.TextField(blank=True, null=True)
+
+    dat = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    dat_commentaire = models.TextField(blank=True, null=True)
+
+    documentation_utilisateurs = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    documentation_utilisateurs_commentaire = models.TextField(blank=True, null=True)
+
+    demande_sso = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    demande_sso_commentaire = models.TextField(blank=True, null=True)
+
+    demande_hebergement = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    demande_hebergement_commentaire = models.TextField(blank=True, null=True)
+
+    fiche_registre = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    fiche_registre_commentaire = models.TextField(blank=True, null=True)
+
+    note_orientation_ssi = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    note_orientation_ssi_commentaire = models.TextField(blank=True, null=True)
+
+    analyse_de_risque = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    analyse_de_risque_commentaire = models.TextField(blank=True, null=True)
+
+    homologation = models.FileField(upload_to='uploads/maturite/', blank=True, null=True)
+    homologation_commentaire = models.TextField(blank=True, null=True)
 
     class Meta:
         db_table = 'maturite_projet'
+
 
 
 class CaracteristiquesTechniques(models.Model):
@@ -93,11 +119,14 @@ class CaracteristiquesTechniques(models.Model):
 
 class Budget(models.Model):
     projet = models.ForeignKey(Projets, on_delete=models.CASCADE)
-    hebergement = models.TextField(blank=True, null=True)
-    homologation = models.TextField(blank=True, null=True)
+    hebergement = models.FileField(upload_to='uploads/budget/', blank=True, null=True)
+    hebergement_commentaire = models.TextField(blank=True, null=True)
 
+    homologation = models.FileField(upload_to='uploads/budget/', blank=True, null=True)
+    homologation_budget_commentaire = models.TextField(blank=True, null=True)
     class Meta:
         db_table = 'budget'
+
 
 
 class AvancementProjet(models.Model):
@@ -124,7 +153,7 @@ class AvancementProjet(models.Model):
 
 class Users(models.Model):
     matricule = models.CharField(max_length=7, unique=True)
-    password = models.CharField(max_length=250, null=False, blank=False)  # Mot de passe en texte clair
+    password = models.CharField(max_length=200, null=False, blank=False)  # Mot de passe en texte clair
     email = models.EmailField(unique=True, blank=True, null=True)
     nom = models.CharField(max_length=100, blank=True, null=True)
     prenom = models.CharField(max_length=100, blank=True, null=True)

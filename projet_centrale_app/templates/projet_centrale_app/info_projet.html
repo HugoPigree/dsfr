@@ -55,22 +55,151 @@
         </section>
 
         <!-- Maturité du projet -->
-        <section class="bg-white shadow-md p-6 rounded-lg">
-            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Maturité du projet</h2>
+         <section class="bg-white shadow-md p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Maturité du projet</h2>
+    <div class="grid grid-cols-2 gap-4">
+        <p><strong>Plan de charge :</strong>
+            {% if maturite.plan_de_charge %}
+                <a href="{{ maturite.plan_de_charge.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.plan_de_charge_commentaire }}</p>
+
+        <p><strong>FEB :</strong>
+            {% if maturite.feb %}
+                <a href="{{ maturite.feb.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.feb_commentaire }}</p>
+
+        <p><strong>Note de cadrage :</strong>
+            {% if maturite.note_de_cadrage %}
+                <a href="{{ maturite.note_de_cadrage.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.note_de_cadrage_commentaire }}</p>
+
+        <p><strong>Cahier des charges :</strong>
+            {% if maturite.cahier_des_charges %}
+                <a href="{{ maturite.cahier_des_charges.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.cahier_des_charges_commentaire }}</p>
+
+        <p><strong>Fonctionne :</strong>
+            {% if maturite.fonctionne %}
+                <a href="{{ maturite.fonctionne.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.fonctionne_commentaire }}</p>
+
+        <p><strong>DAT :</strong>
+            {% if maturite.dat %}
+                <a href="{{ maturite.dat.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.dat_commentaire }}</p>
+
+        <p><strong>Documentation utilisateurs :</strong>
+            {% if maturite.documentation_utilisateurs %}
+                <a href="{{ maturite.documentation_utilisateurs.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.documentation_utilisateurs_commentaire }}</p>
+
+        <p><strong>Demande SSO :</strong>
+            {% if maturite.demande_sso %}
+                <a href="{{ maturite.demande_sso.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.demande_sso_commentaire }}</p>
+
+        <p><strong>Demande d'hébergement :</strong>
+            {% if maturite.demande_hebergement %}
+                <a href="{{ maturite.demande_hebergement.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.demande_hebergement_commentaire }}</p>
+
+        <p><strong>Fiche registre :</strong>
+            {% if maturite.fiche_registre %}
+                <a href="{{ maturite.fiche_registre.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.fiche_registre_commentaire }}</p>
+
+        <p><strong>Note d'orientation SSI :</strong>
+            {% if maturite.note_orientation_ssi %}
+                <a href="{{ maturite.note_orientation_ssi.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.note_orientation_ssi_commentaire }}</p>
+
+        <p><strong>Analyse de risque :</strong>
+            {% if maturite.analyse_de_risque %}
+                <a href="{{ maturite.analyse_de_risque.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.analyse_de_risque_commentaire }}</p>
+
+        <p><strong>Homologation :</strong>
+            {% if maturite.homologation %}
+                <a href="{{ maturite.homologation.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+            {% else %}
+                Non disponible
+            {% endif %}
+        </p>
+        <p><strong>Commentaire :</strong> {{ maturite.homologation_commentaire }}</p>
+    </div>
+</section>
+
+
+
+        <!-- Budget -->
+        <section class="bg-white shadow-md p-6 rounded-lg mb-8">
+            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Budget</h2>
             <div class="grid grid-cols-2 gap-4">
-                <p><strong>Plan de charge :</strong> {{ maturite.plan_de_charge }}</p>
-                <p><strong>FEB :</strong> {{ maturite.feb }}</p>
-                <p><strong>Note de cadrage :</strong> {{ maturite.note_de_cadrage }}</p>
-                <p><strong>Cahier des charges :</strong> {{ maturite.cahier_des_charges }}</p>
-                <p><strong>Fonctionne :</strong> {{ maturite.fonctionne }}</p>
-                <p><strong>DAT :</strong> {{ maturite.dat }}</p>
-                <p><strong>Documentation utilisateurs :</strong> {{ maturite.documentation_utilisateurs }}</p>
-                <p><strong>Demande SSO :</strong> {{ maturite.demande_sso }}</p>
-                <p><strong>Demande d'hébergement :</strong> {{ maturite.demande_hebergement }}</p>
-                <p><strong>Fiche registre :</strong> {{ maturite.fiche_registre }}</p>
-                <p><strong>Note d'orientation SSI :</strong> {{ maturite.note_orientation_ssi }}</p>
-                <p><strong>Analyse de risque :</strong> {{ maturite.analyse_de_risque }}</p>
-                <p><strong>Homologation :</strong> {{ maturite.homologation }}</p>
+                <p><strong>Hébergement :</strong>
+                    {% if budget.hebergement %}
+                        <a href="{{ budget.hebergement.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+                    {% else %}
+                        Non disponible
+                    {% endif %}
+                </p>
+                <p><strong>Commentaire :</strong> {{ budget.hebergement_commentaire }}</p>
+
+                <p><strong>Homologation :</strong>
+                    {% if budget.homologation %}
+                        <a href="{{ budget.homologation.url }}" download class="fr-btn fr-btn--sm">Télécharger</a>
+                    {% else %}
+                        Non disponible
+                    {% endif %}
+                </p>
+                <p><strong>Commentaire :</strong> {{ budget.homologation_budget_commentaire }}</p>
             </div>
         </section>
 
@@ -85,16 +214,6 @@
             </div>
         </section>
 
-        <!-- Budget -->
-        <section class="bg-white shadow-md p-6 rounded-lg">
-            <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Budget</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <p><strong>Hébergement :</strong> {{ budget.hebergement }}</p>
-
-            </div>
-        </section>
-
-        <!-- Avancements -->
         <!-- Avancements -->
         <section class="bg-white shadow-md p-6 rounded-lg">
             <h2 class="text-xl font-bold border-b-2 border-gray-200 pb-2 mb-4">Avancements</h2>
@@ -104,16 +223,6 @@
                 </div>
             </div>
         </section>
-        <div>
-    <p>Pièce jointe :</p>
-    {% if projet.piece_jointe %}
-        <a href="{{ projet.piece_jointe.url }}" class="fr-btn fr-btn--secondary" download>
-            Télécharger la pièce jointe
-        </a>
-    {% else %}
-        <p>Aucune pièce jointe disponible.</p>
-    {% endif %}
-</div>
 
             <a href="{% url 'telecharger_fiche_projet' projet.id %}" class="fr-btn">
     Télécharger la fiche PDF
