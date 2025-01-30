@@ -23,10 +23,18 @@ Ce projet est basé sur Django et utilise DSFR pour le design. Il permet la gest
    cd dsfr
 
    pip install -r requirements.txt
+   
+2. Pour la bdd :
 
-2. Initialiser la BDD :
-   ```bash
-   python manage.py migrate
+- Mettre le backup sur pgadmin
+
+
+- Modifier les infos de la DATABASES dans settings.py (ligne 80, en fonction de votre configuration de pgadmin)
+
+
+-
+
+
    
 3. Lancez le serveur :
    ```bash
