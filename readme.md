@@ -32,11 +32,12 @@ Ce projet est basé sur Django et utilise DSFR pour le design. Il permet la gest
 - Modifier les infos de la DATABASES dans settings.py (ligne 80, en fonction de votre configuration de pgadmin)
 
 
--
-
+3. Pour tailwinds :
+   ```bash
+   npm run build:css
 
    
-3. Lancez le serveur :
+4. Lancez le serveur :
    ```bash
    python manage.py runserver
 
