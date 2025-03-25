@@ -27,7 +27,7 @@
                 <div class="fr-header__tools">
                     <div class="fr-header__tools-links">
                         <ul class="fr-btns-group">
-                            {% if request.session.user_id %}
+                            {% if user.is_authenticated %}
                                 <!-- Affichage pour utilisateur connecté -->
                                 <li>
                                     <a href="{% url 'logout' %}" class="fr-btn fr-icon-lock-line" title="Déconnexion">

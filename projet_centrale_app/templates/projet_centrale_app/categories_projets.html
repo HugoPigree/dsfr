@@ -34,12 +34,13 @@
                     </div>
                 </div>
                 <div class="fr-card__footer flex justify-between">
-
+                    <!-- Tous les utilisateurs peuvent voir le bouton modifier, mais l'accès est contrôlé par le décorateur dans les vues -->
                     <a href="{% url 'modifier_projet' projet.id %}" class="fr-btn fr-btn--secondary">
                         Modifier
                     </a>
 
-                    {% if user and user.is_admin %}
+                    <!-- Vérification des droits d'administration avec le système natif de Django -->
+                    {% if user.is_authenticated and user.is_staff %}
                     <form action="{% url 'supprimer_projet' projet.id %}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
                         {% csrf_token %}
                         <button type="submit" class="fr-btn fr-btn--error">
@@ -47,8 +48,6 @@
                         </button>
                     </form>
                     {% endif %}
-
-
                 </div>
             </div>
             {% empty %}
@@ -57,7 +56,6 @@
             </p>
             {% endfor %}
         </div>
-
     </main>
 
     <!-- Footer -->

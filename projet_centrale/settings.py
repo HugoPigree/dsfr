@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-*k+ns_a*g9&1s4&gy&2*vuu$!x9_nmi2oxcagol$h2vd=%&z%t
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "prod-gestion-applicative.d398.dev.forge.minint.fr"
+    
 ]
 
 
@@ -153,3 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# URLs de redirection pour l'authentification
+LOGIN_REDIRECT_URL = 'index'  # Redirection après connexion réussie (vers votre page d'accueil)
+LOGIN_URL = 'login'  # URL où rediriger si un utilisateur non connecté tente d'accéder à une page protégée
+LOGOUT_REDIRECT_URL = '/accounts/login/'  # Rediriger vers la page de login après déconnexion

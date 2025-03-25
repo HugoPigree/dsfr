@@ -8,7 +8,14 @@
     <!-- Inclusion de DSFR et Tailwind CSS -->
     <link href="{% static 'dsfr.min.css' %}" rel="stylesheet">
     <link href="{% static 'output.css' %}" rel="stylesheet">
-
+    <script>
+        // Ce script s'exécutera une fois le DOM chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efface les champs au chargement de la page pour éviter les valeurs pré-remplies
+            document.getElementById('id_username').value = '';
+            document.getElementById('id_password').value = '';
+        });
+    </script>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50">
 
@@ -18,8 +25,8 @@
     <h1 class="text-center mt-20 text-3xl font-bold mb-6">Page Login</h1>
     <main class="">
 
-        <div class="fr-container p-6 w-full mt-20 mb-20"> <!-- Suppression de la classe `fr-card` -->
-            <form action="{% url 'login' %}" method="post">
+        <div class="fr-container p-6 w-full mt-20 mb-20">
+            <form action="{% url 'login' %}" method="post" autocomplete="off">
                 {% csrf_token %}
 
                 <!-- Affichage des messages d'erreur -->
@@ -31,30 +38,40 @@
                     </ul>
                 {% endif %}
 
+                {% if form.errors %}
+                    <div class="fr-alert fr-alert--error fr-mb-3w">
+                        <p>Vos identifiants sont incorrects. Veuillez réessayer.</p>
+                    </div>
+                {% endif %}
+
                 <div>
-                    <!-- Champ matricule -->
+                    <!-- Champ matricule/username -->
                     <div>
-                        <label for="matricule" class="fr-label">Matricule</label>
+                        <label for="id_username" class="fr-label">Matricule</label>
                         <input
                             type="text"
-                            id="matricule"
-                            name="matricule"
+                            id="id_username"
+                            name="username"
                             class="fr-input mt-2 block w-full"
                             placeholder="Entrez votre matricule"
                             required
+                            autocomplete="off"
+                            value=""
                         >
                     </div>
 
                     <!-- Champ mot de passe -->
                     <div class="mt-10">
-                        <label for="password" class="fr-label">Mot de passe</label>
+                        <label for="id_password" class="fr-label">Mot de passe</label>
                         <input
                             type="password"
-                            id="password"
+                            id="id_password"
                             name="password"
                             class="fr-input mt-2 block w-full"
                             placeholder="Entrez votre mot de passe"
                             required
+                            autocomplete="new-password"
+                            value=""
                         >
                     </div>
                 </div>
@@ -68,6 +85,8 @@
                     </button>
                 </div>
 
+                <!-- Champ caché pour la redirection après connexion -->
+                <input type="hidden" name="next" value="{{ next }}">
             </form>
         </div>
     </main>

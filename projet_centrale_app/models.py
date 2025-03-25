@@ -151,37 +151,3 @@ class AvancementProjet(models.Model):
         return f"{self.projet.titre} - {self.choix}"
 
 
-class Users(models.Model):
-    matricule = models.CharField(max_length=7, unique=True)
-    password = models.CharField(max_length=200, null=False, blank=False)  # Mot de passe en texte clair
-    email = models.EmailField(unique=True, blank=True, null=True)
-    nom = models.CharField(max_length=100, blank=True, null=True)
-    prenom = models.CharField(max_length=100, blank=True, null=True)
-    date_creation = models.DateTimeField(auto_now_add=True)
-    is_admin = models.BooleanField(default=False)# Date de création de l'utilisateur
-
-    REQUIRED_FIELDS = ["password", "email"]
-    USERNAME_FIELD = "matricule"
-
-    class Meta:
-        db_table = "users_table"
-        verbose_name = "Utilisateur"
-        verbose_name_plural = "Utilisateurs"
-
-    def __str__(self):
-        return self.matricule
-
-
-class UserSessions(models.Model):
-    user = models.ForeignKey("Users", on_delete=models.CASCADE, related_name="sessions")
-    session_key = models.CharField(max_length=255, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)  # Date de début de session
-    expired_at = models.DateTimeField(blank=True, null=True)  # Date d'expiration de la session
-
-    class Meta:
-        db_table = "user_sessions"
-        verbose_name = "Session utilisateur"
-        verbose_name_plural = "Sessions utilisateurs"
-
-    def __str__(self):
-        return f"Session de {self.user.matricule} - {self.session_key}"
