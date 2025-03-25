@@ -4,7 +4,7 @@ from django.template.loader import get_template
 from django.template.loader import render_to_string
 from django.contrib.staticfiles import finders
 from xhtml2pdf import pisa
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -20,8 +20,6 @@ from .models import (
     Budget,
     AvancementProjet,
     Categorie,
-    Users,
-    UserSessions,
 )
 from .forms import (
     ProjetForm,
@@ -36,27 +34,34 @@ from .forms import (
 from django.urls import reverse
 from django.contrib import messages
 
+
+# Fonction pour vérifier si l'utilisateur est admin
+def is_admin(user):
+    return user.is_superuser or user.is_staff
+
+
 # Vue pour la page d'accueil
+@login_required
 def index(request):
     categories = Categorie.objects.prefetch_related('projets').all()
     return render(request, "projet_centrale_app/index.html", {"categories": categories})
 
+
 # Vue pour afficher les projets par catégorie
+@login_required
 def categorie_detail(request, categorie_slug):
     categorie = get_object_or_404(Categorie, slug=categorie_slug)
     projets = Projets.objects.filter(categorie=categorie)
-    user_id = request.session.get('user_id')
-    user = None
-    if user_id:
-        user = Users.objects.get(id=user_id)
 
     return render(
         request,
         "projet_centrale_app/categories_projets.html",
-        {"categorie": categorie, "projets": projets, "user": user,},
+        {"categorie": categorie, "projets": projets, "user": request.user},
     )
 
+
 # Vue pour les détails d'un projet
+@login_required
 def projet_detail(request, projet_id):
     projet = get_object_or_404(Projets, id=projet_id)
     categorie = projet.categorie
@@ -66,7 +71,10 @@ def projet_detail(request, projet_id):
         {"projet": projet, "categorie": categorie},
     )
 
+
 # Vue pour supprimer un projet
+@login_required
+@user_passes_test(is_admin)
 def supprimer_projet(request, pk):
     projet = get_object_or_404(Projets, pk=pk)
     if request.method == "POST":
@@ -75,7 +83,9 @@ def supprimer_projet(request, pk):
         return redirect('categories_projets', categorie_slug=projet.categorie.slug)
     return redirect('index')
 
+
 # Vue pour les informations complètes du projet
+@login_required
 def info_projet(request, projet_id):
     projet = get_object_or_404(Projets, id=projet_id)
     organisation = Organisation.objects.filter(projet=projet).first()
@@ -99,32 +109,28 @@ def info_projet(request, projet_id):
         },
     )
 
-# Vue pour ajouter un projet
-def ajouter_projet(request):
-    user_id = request.session.get('user_id')
-    if not user_id:
-        return redirect('login')
 
-    user = Users.objects.get(id=user_id)
-    if not user.is_admin:
-        return HttpResponseForbidden("Vous n'avez pas les droits pour accéder à cette page.")
+# Vue pour ajouter un projet
+@login_required
+@user_passes_test(is_admin)
+def ajouter_projet(request):
     if request.method == "POST":
-        projet_form = ProjetForm(request.POST)
+        projet_form = ProjetForm(request.POST, request.FILES)
         organisation_form = OrganisationForm(request.POST)
         planning_form = PlanningForm(request.POST)
-        maturite_form = MaturiteForm(request.POST)
+        maturite_form = MaturiteForm(request.POST, request.FILES)
         caracteristiques_form = CaracteristiquesForm(request.POST)
-        budget_form = BudgetForm(request.POST)
+        budget_form = BudgetForm(request.POST, request.FILES)
         avancement_projet_form = AvancementForm(request.POST)
 
         if (
-            projet_form.is_valid()
-            and organisation_form.is_valid()
-            and planning_form.is_valid()
-            and maturite_form.is_valid()
-            and caracteristiques_form.is_valid()
-            and budget_form.is_valid()
-            and avancement_projet_form.is_valid()
+                projet_form.is_valid()
+                and organisation_form.is_valid()
+                and planning_form.is_valid()
+                and maturite_form.is_valid()
+                and caracteristiques_form.is_valid()
+                and budget_form.is_valid()
+                and avancement_projet_form.is_valid()
         ):
             projet = projet_form.save()
             organisation = organisation_form.save(commit=False)
@@ -183,15 +189,12 @@ def ajouter_projet(request):
             "avancement_projet_form": avancement_projet_form,
         },
     )
+
+
+# Vue pour modifier un projet
+@login_required
+@user_passes_test(is_admin)
 def modifier_projet(request, projet_id):
-    user_id = request.session.get('user_id')
-    if not user_id:
-        return redirect('login')
-
-    user = Users.objects.get(id=user_id)
-    if not user.is_admin:
-        return HttpResponseForbidden("Vous n'avez pas les droits pour accéder à cette page.")
-
     # Récupération des objets liés au projet
     projet = get_object_or_404(Projets, id=projet_id)
     organisation = Organisation.objects.filter(projet=projet).first()
@@ -213,13 +216,13 @@ def modifier_projet(request, projet_id):
 
         # Validation des formulaires
         if (
-            projet_form.is_valid()
-            and organisation_form.is_valid()
-            and planning_form.is_valid()
-            and maturite_form.is_valid()
-            and caracteristiques_form.is_valid()
-            and budget_form.is_valid()
-            and avancement_projet_form.is_valid()
+                projet_form.is_valid()
+                and organisation_form.is_valid()
+                and planning_form.is_valid()
+                and maturite_form.is_valid()
+                and caracteristiques_form.is_valid()
+                and budget_form.is_valid()
+                and avancement_projet_form.is_valid()
         ):
             # Associer explicitement le projet avant d'enregistrer
             organisation_form.instance.projet = projet
@@ -264,6 +267,8 @@ def modifier_projet(request, projet_id):
     )
 
 
+# Vue pour télécharger la fiche projet au format PDF
+@login_required
 def telecharger_fiche_projet(request, projet_id):
     projet = get_object_or_404(Projets, id=projet_id)
     organisation = Organisation.objects.filter(projet=projet).first()
@@ -280,7 +285,6 @@ def telecharger_fiche_projet(request, projet_id):
         'caracteristiques': caracteristiques,
         'budget': budget,
         'avancement_projet': AvancementProjet.objects.filter(projet=projet).first(),
-
     }
 
     template_path = 'projet_centrale_app/fiche_projet.html'
@@ -309,31 +313,27 @@ def telecharger_fiche_projet(request, projet_id):
     return response
 
 
-
+# Vue de login
 def login_view(request):
     if request.method == "POST":
-        matricule = request.POST.get("matricule")
-        password = request.POST.get("password")
+        # Récupérer les valeurs des champs
+        username = request.POST.get("matricule") or request.POST.get("username") or request.POST.get("login")
+        password = request.POST.get("password") or request.POST.get("mot_de_passe") or request.POST.get("mdp")
 
-        try:
-            # Récupérer l'utilisateur correspondant au matricule
-            user = Users.objects.get(matricule=matricule)
+        # Authentification
+        user = authenticate(request, username=username, password=password)
 
-            # Vérification du mot de passe
-            if user.password == password:
-                # Si le mot de passe correspond, l'utilisateur est authentifié
-                request.session['user_id'] = user.id
-                return redirect('index')
-            else:
-                # Si le mot de passe ne correspond pas
-                messages.error(request, "Matricule ou mot de passe incorrect.")
-                return redirect('login')
-        except Users.DoesNotExist:
-            messages.error(request, "Matricule incorrect.")
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Connexion réussie. Bienvenue {user.username}!")
+            return redirect('index')
+        else:
+            messages.error(request, "Matricule ou mot de passe incorrect.")
 
-    return render(request, "projet_centrale_app/login.html")
+    return render(request, "projet_centrale_app/registration/login.html")
 
+
+# Vue de déconnexion
 def logout_view(request):
     logout(request)
-    messages.success(request, "Vous êtes déconnecté.")
     return redirect("login")
